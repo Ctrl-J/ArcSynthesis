@@ -112,6 +112,12 @@ bool Application::Run( void )
             break;
         }
 
+        if( keyboard->IsKeyPressed( VK_NEXT ) )
+        {
+            toggleFullscreen();
+            continue;
+        }
+
         // Fixed time-step, full speed render. To accomplish this, we
         // use an accumulator.
 
@@ -177,31 +183,43 @@ bool Application::initializeWindow( void )
     RegisterClassEx( &wcx );
 
     // The following code assumes we only have one monitor and are displaying on the primary monitor
-
-    // The following code sets up a windowed display that is centered on the screen
+    glm::ivec2 screenDimensions;
     int value = GetSystemMetrics( SM_CXSCREEN );
-    if( config->GraphicsConfig()->GetWindowWidth() > value )
-    {
-        config->GraphicsConfig()->SetWindowWidth( value - 20 );
-    }
-    config->GraphicsConfig()->SetScreenWidth( value );
+    screenDimensions.x = value;
     
     value = GetSystemMetrics( SM_CYSCREEN );
-    if( config->GraphicsConfig()->GetWindowHeight() > value )
+    screenDimensions.y = value;
+
+    config->GraphicsConfig()->SetScreenDimensions( screenDimensions );
+
+    if( config->GraphicsConfig()->GetFullscreen() == false )
     {
-        config->GraphicsConfig()->SetWindowHeight( value - 20 );
+        // The following code sets up a windowed display that is centered on the screen
+        if( config->GraphicsConfig()->GetWindowWidth() > (screenDimensions.x - 20) )
+        {
+            config->GraphicsConfig()->SetWindowWidth( screenDimensions.x - 20 );
+        }
+        if( config->GraphicsConfig()->GetWindowHeight() > (screenDimensions.y - 20) )
+        {
+            config->GraphicsConfig()->SetWindowHeight( screenDimensions.y - 20 );
+        }
+
+    	int x_position = ( screenDimensions.x - config->GraphicsConfig()->GetWindowWidth() ) / 2;
+    	int y_position = ( screenDimensions.y - config->GraphicsConfig()->GetWindowHeight() ) / 2;
+
+    	config->GraphicsConfig()->SetWindowPosition( glm::ivec2( x_position, y_position ) );
     }
-    config->GraphicsConfig()->SetScreenHeight( value );
-
-    int x_position = ( config->GraphicsConfig()->GetScreenWidth() - config->GraphicsConfig()->GetWindowWidth() ) / 2;
-    int y_position = ( config->GraphicsConfig()->GetScreenHeight() - config->GraphicsConfig()->GetWindowHeight() ) / 2;
-
-    config->GraphicsConfig()->SetWindowPosition( glm::ivec2( x_position, y_position ) );
+    else
+    {
+        // Otherwise we do a fullscreen window.
+        config->GraphicsConfig()->SetWindowDimensions( screenDimensions );
+        config->GraphicsConfig()->SetWindowPosition( glm::ivec2( 0, 0 ) );
+    }
 
     // Here we create a temporary window so that we can initialize the OpenGL extension methods used to create
     // the context we want.
     HWND temp_h_wnd = CreateWindowEx( NULL, className.c_str(), applicationName.c_str(), WS_POPUP, 100, 100, 100, 100,
-                            NULL, NULL, hInstance, this );
+                                      NULL, NULL, hInstance, this );
     if( NULL == temp_h_wnd )
     {
         return false;
@@ -259,7 +277,47 @@ bool Application::initializeWindow( void )
 
 bool Application::resizeWindow( unsigned int width, unsigned int height )
 {
-    // TODO: Implement this
+    // First set the dimensions. This also handles sizing the dimensions( window will never be smaller than 100x100 )
+    config->GraphicsConfig()->SetWindowDimensions( glm::ivec2( width, height ) );
+    int windowWidth = config->GraphicsConfig()->GetWindowWidth();
+    int windowHeight = config->GraphicsConfig()->GetWindowHeight();
+
+    // note, these will work fine for fullscreen as well, because screen width - fullscreen window size = 0
+    int x = ( config->GraphicsConfig()->GetScreenWidth() - windowWidth ) / 2;
+    int y = ( config->GraphicsConfig()->GetScreenHeight() - windowHeight ) / 2;
+
+    config->GraphicsConfig()->SetWindowPosition( glm::ivec2( x, y ) );
+    
+    ShowWindow( hWnd, SW_HIDE );
+
+    SetWindowPos( hWnd, HWND_TOP,
+                  x, y,
+                  windowWidth,
+                  windowHeight,
+                  SWP_SHOWWINDOW );
+    
+    ShowWindow( hWnd, SW_SHOW );
+
+    return true;
+}
+
+bool Application::resizeWindow( unsigned int x, unsigned int y, unsigned int width, unsigned int height )
+{
+    // We call set window dim/pos which handles the constraints, then retrieve the constrained values.
+    config->GraphicsConfig()->SetWindowDimensions( glm::ivec2( width, height ) );
+    int windowWidth = config->GraphicsConfig()->GetWindowWidth();
+    int windowHeight = config->GraphicsConfig()->GetWindowHeight();
+
+    config->GraphicsConfig()->SetWindowPosition( glm::ivec2( x, y ) );
+    int xPos = config->GraphicsConfig()->GetWindowXPosition();
+    int yPos = config->GraphicsConfig()->GetWindowYPosition();
+
+
+    SetWindowPos( hWnd, HWND_TOP,
+                  xPos, yPos,
+                  windowWidth,
+                  windowHeight,
+                  SWP_SHOWWINDOW );
     return true;
 }
 
@@ -277,6 +335,24 @@ void Application::shutdownWindow( void )
     DestroyWindow( hWnd );
     UnregisterClass( className.c_str(), hInstance );
     hInstance = NULL;
+}
+
+void Application::toggleFullscreen( void )
+{
+    bool wasFullscreen = config->GraphicsConfig()->GetFullscreen();
+    config->GraphicsConfig()->SetFullscreen( !wasFullscreen );
+    if( wasFullscreen == false )
+    {
+        // was fullscreen -> windowed
+        resizeWindow( config->GraphicsConfig()->GetScreenWidth(),
+                      config->GraphicsConfig()->GetScreenHeight() );
+    }
+    else
+    {
+        // was windowed -> fullscreen
+        resizeWindow( config->GraphicsConfig()->GetDefaultWindowWidth(),
+                      config->GraphicsConfig()->GetDefaultWindowHeight() );
+    }
 }
 
 void Application::step( void )

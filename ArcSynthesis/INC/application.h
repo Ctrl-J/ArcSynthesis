@@ -43,10 +43,13 @@ private:
     // Draws the scene.
     void draw( void );
 
-    // Not yet implemented. This will resize the current window to the size 
-    // specified, handling any viewport changes. Possibly going to throw
-    // window fullscreen toggling into here?
+    // This will resize the current window to the size specified, 
+    // first method centers, second applies the position given.
+    // TODO: handle any viewport changes.
     bool resizeWindow( unsigned int width, unsigned int height );
+    bool resizeWindow( unsigned int x, unsigned int y, unsigned int width, unsigned int height );
+
+    void toggleFullscreen( void );
 
     // Cleans up the window and destroys the OpenGL context
     void shutdownWindow( void );

@@ -19,12 +19,15 @@ public:
     void SetVSync( bool v_sync );
 
     glm::ivec2 GetWindowDimensions( void );
+    glm::ivec2 GetDefaultWindowDimensions( void );
     void SetWindowDimensions( const glm::ivec2 &dimensions );
 
     int GetWindowWidth( void );
+    int GetDefaultWindowWidth( void );
     void SetWindowWidth( int width );
 
     int GetWindowHeight( void );
+    int GetDefaultWindowHeight( void );
     void SetWindowHeight( int height );
     
     glm::ivec2 GetWindowPosition( void );

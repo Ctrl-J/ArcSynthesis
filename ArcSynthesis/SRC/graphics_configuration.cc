@@ -52,6 +52,11 @@ void GraphicsConfiguration::SetVSync( bool v_sync )
     vSync = v_sync;
 }
 
+glm::ivec2 GraphicsConfiguration::GetDefaultWindowDimensions( void )
+{
+    return defaultWindowDimensions;
+}
+
 glm::ivec2 GraphicsConfiguration::GetWindowDimensions( void )
 {
     return currentWindowDimensions;
@@ -60,6 +65,11 @@ glm::ivec2 GraphicsConfiguration::GetWindowDimensions( void )
 void GraphicsConfiguration::SetWindowDimensions( const glm::ivec2 &dimensions )
 {
     currentWindowDimensions = dimensions;
+}
+
+int GraphicsConfiguration::GetDefaultWindowWidth( void )
+{
+    return defaultWindowDimensions.x;
 }
 
 int GraphicsConfiguration::GetWindowWidth( void )
@@ -75,6 +85,11 @@ void GraphicsConfiguration::SetWindowWidth( int width )
     }
 
     currentWindowDimensions.x = width;
+}
+
+int GraphicsConfiguration::GetDefaultWindowHeight( void )
+{
+    return defaultWindowDimensions.y;
 }
 
 int GraphicsConfiguration::GetWindowHeight( void )

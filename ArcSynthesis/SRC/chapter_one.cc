@@ -1,8 +1,8 @@
 #include <precompiled.h>
 #include <chapter_one.h>
 
-ChapterOne::ChapterOne( std::shared_ptr<Keyboard> keyboard_ptr, std::shared_ptr<Configuration> config_ptr ) 
-    : Chapter( keyboard_ptr, config_ptr )
+ChapterOne::ChapterOne( std::shared_ptr<Configuration> config_ptr, std::shared_ptr<Keyboard> keyboard_ptr, std::shared_ptr<Logger> logger_ptr ) 
+    : Chapter( config_ptr, keyboard_ptr, logger_ptr )
 {
 }
 

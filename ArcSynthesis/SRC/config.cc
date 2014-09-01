@@ -4,7 +4,8 @@
 Configuration::Configuration( void )
 {
     isLoaded = false;
-    graphics_config = nullptr;
+    graphicsConfig = nullptr;
+    systemConfig = nullptr;
 }
 
 bool Configuration::LoadConfiguration( const std::string &set_filename )
@@ -25,11 +26,22 @@ bool Configuration::LoadConfiguration( const std::string &set_filename )
         isLoaded = false;
         return false;
     }
+    
+    if( loadSystem( xml_document ) == false )
+    {
+        isLoaded = false;
+        return false;
+    }
 }
 
 std::shared_ptr<GraphicsConfiguration> Configuration::GraphicsConfig( void )
 {
-    return graphics_config;
+    return graphicsConfig;
+}
+
+std::shared_ptr<SystemConfiguration> Configuration::SystemConfig( void )
+{
+    return systemConfig;
 }
 
 bool Configuration::loadGraphics( const rapidxml::xml_document<> *xml_document )
@@ -77,13 +89,11 @@ bool Configuration::loadGraphics( const rapidxml::xml_document<> *xml_document )
                 fullscreen = false;
             }
         }
-
-        if( node_name.compare( "renderer" ) == 0 )
+        else if( node_name.compare( "renderer" ) == 0 )
         {
             renderer = node_value;
         }
-
-        if( node_name.compare( "width" ) == 0 )
+        else if( node_name.compare( "width" ) == 0 )
         {
             try
             {
@@ -94,8 +104,7 @@ bool Configuration::loadGraphics( const rapidxml::xml_document<> *xml_document )
                 width = 800;
             }
         }
-
-        if( node_name.compare( "height" ) == 0 )
+        else if( node_name.compare( "height" ) == 0 )
         {
             try
             {
@@ -106,8 +115,7 @@ bool Configuration::loadGraphics( const rapidxml::xml_document<> *xml_document )
                 height = 480;
             }
         }
-
-        if( node_name.compare( "vsync" ) == 0 )
+        else if( node_name.compare( "vsync" ) == 0 )
         {
             if( node_value.compare( "True" ) == 0 )
             {
@@ -120,12 +128,63 @@ bool Configuration::loadGraphics( const rapidxml::xml_document<> *xml_document )
         }
     }
 
-    graphics_config = std::make_shared<GraphicsConfiguration>
+    graphicsConfig = std::make_shared<GraphicsConfiguration>
                       ( 
                           renderer,
                           fullscreen,
                           v_sync,
                           glm::ivec2(width, height)
                       );
+    return true;
+}
+
+bool Configuration::loadSystem( const rapidxml::xml_document<> *xml_doc )
+{
+    if( xml_doc == NULL )
+    {
+        return false;
+    }
+
+    rapidxml::xml_node<> *node = xml_doc->first_node( "configuration" );
+    if( node == NULL )
+    {
+        return false;
+    }
+
+    node = node->first_node( "system" );
+    if( node == NULL )
+    {
+        return false;
+    }
+
+    std::string data_folder;
+    std::string log_folder;
+
+    std::string node_name;
+    std::string node_value;
+
+    for( rapidxml::xml_node<> *property_node = node->first_node(); 
+         property_node != NULL; 
+         property_node = property_node->next_sibling() )
+    {
+        node_name = property_node->name();
+        node_value = property_node->value();
+        if( node_name.compare( "datafolder" ) == 0 )
+        {
+            data_folder = node_value;
+        }
+        else if( node_name.compare( "logfolder" ) == 0 )
+        {
+            log_folder = node_value;
+        }
+
+    }
+
+    systemConfig = std::make_shared<SystemConfiguration>
+                   ( 
+                       data_folder,
+                       log_folder
+                   );
+
     return true;
 }

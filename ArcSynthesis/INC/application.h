@@ -6,6 +6,7 @@
 #include <timer.h>
 #include <config.h>
 #include <chapter.h>
+#include <logger.h>
 
 class Application
 {
@@ -75,6 +76,8 @@ private:
     double timeStep;
 
     std::shared_ptr<Configuration> config;
+
+    std::shared_ptr<Logger> logger;
 
     std::shared_ptr<Chapter> currentChapter;
 

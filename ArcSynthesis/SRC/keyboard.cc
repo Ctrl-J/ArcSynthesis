@@ -1,10 +1,12 @@
 #include <precompiled.h>
 #include <keyboard.h>
 
-Keyboard::Keyboard()
+Keyboard::Keyboard( std::shared_ptr<Logger> logger_ptr)
 {
     std::fill( downKeys.begin(), downKeys.end(), false );
     std::fill( pressedKeys.begin(), pressedKeys.end(), false );
+
+    logger = logger_ptr;
 }
 
 bool Keyboard::IsKeydown( int key_code )

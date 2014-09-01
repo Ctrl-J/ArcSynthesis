@@ -1,13 +1,14 @@
 #pragma once
 #include <precompiled.h>
 
-class Keyboard;
 class Configuration;
+class Keyboard;
+class Logger;
 
 class Chapter
 {
 public:
-    Chapter( std::shared_ptr<Keyboard> keyboard_ptr, std::shared_ptr<Configuration> config_ptr );
+    Chapter( std::shared_ptr<Configuration> config_ptr, std::shared_ptr<Keyboard> keyboard_ptr, std::shared_ptr<Logger> logger_ptr );
     ~Chapter( void );
     Chapter( const Chapter &other ) = delete;
     Chapter&operator= ( const Chapter &other ) = delete;
@@ -20,4 +21,5 @@ public:
 protected:
     std::shared_ptr<Keyboard> keyboard;
     std::shared_ptr<Configuration> config;
+    std::shared_ptr<Logger> logger;
 };

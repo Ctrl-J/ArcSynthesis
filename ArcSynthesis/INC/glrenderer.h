@@ -1,11 +1,14 @@
 #pragma once
 #include <precompiled.h>
 
+class Logger;
+class Configuration;
+
 class GLRenderer
 {
     friend class Application;
 public:
-    GLRenderer( void );
+    GLRenderer( std::shared_ptr<Configuration> config_ptr, std::shared_ptr<Logger> logger_ptr );
 
     bool Initialize( HWND h_wnd );
     void Draw( void );
@@ -20,4 +23,7 @@ private:
     HDC deviceContext;
     HGLRC renderContext;
     HGLRC tempRenderContext;
+
+    std::shared_ptr<Configuration> config;
+    std::shared_ptr<Logger> logger;
 };

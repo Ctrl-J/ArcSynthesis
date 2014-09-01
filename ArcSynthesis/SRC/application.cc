@@ -64,7 +64,10 @@ bool Application::Initialize( void )
     config = std::make_shared<Configuration>();
     config->LoadConfiguration( "config.xml" );
 
-    renderer = std::make_shared<GLRenderer>();
+    logger = std::make_shared<Logger>();
+    logger->Initialize( config->SystemConfig()->GetLogFolder(), LOG_TYPE::INFO, LOG_TYPE::CRITICAL );
+
+    renderer = std::make_shared<GLRenderer>( config, logger );
     if( initializeWindow() == false )
     {
         MessageBox( NULL, L"Failed to initialize window.", L"SYSTEM ERROR", MB_OK | MB_ICONERROR );
@@ -74,12 +77,12 @@ bool Application::Initialize( void )
         return false;
     }
     
-    keyboard = std::make_shared<Keyboard>();
+    keyboard = std::make_shared<Keyboard>( logger );
 
     timer = std::make_shared<Timer>();
     timer->SetTime();
 
-    currentChapter = std::make_shared<ChapterOne>( keyboard, config );
+    currentChapter = std::make_shared<ChapterOne>( config, keyboard, logger );
     currentChapter->Initialize();
 
     initialized = true;
@@ -199,6 +202,26 @@ bool Application::initializeWindow( void )
 
     config->GraphicsConfig()->SetScreenDimensions( screenDimensions );
 
+    std::stringstream message;
+    // Here we create a temporary window so that we can initialize the OpenGL extension methods used to create
+    // the context we want.
+    HWND temp_h_wnd = CreateWindowEx( NULL, className.c_str(), applicationName.c_str(), WS_POPUP, 100, 100, 100, 100,
+                                      NULL, NULL, hInstance, this );
+    if( NULL == temp_h_wnd )
+    {
+        logger->Log( LOG_TYPE::ERR, "Initialization Error", "Error creating temporary window handle." );
+        return false;
+    }
+    ShowWindow( temp_h_wnd, SW_HIDE );
+    if( renderer->initializeTemporaryExtensions( temp_h_wnd ) == false )
+    {
+        DestroyWindow( temp_h_wnd );
+        temp_h_wnd = NULL;
+        
+        logger->Log( LOG_TYPE::ERR, "Initialization Error", "Error loading temporary OpenGL function pointers." );
+        return false;
+    }
+    
     if( config->GraphicsConfig()->GetFullscreen() == false )
     {
         // The following code sets up a windowed display that is centered on the screen
@@ -215,29 +238,15 @@ bool Application::initializeWindow( void )
     	int y_position = ( screenDimensions.y - config->GraphicsConfig()->GetWindowHeight() ) / 2;
 
     	config->GraphicsConfig()->SetWindowPosition( glm::ivec2( x_position, y_position ) );
+        message << "Initial window set to windowed mode at ( " << x_position << ", " << y_position << " ) with dimensions "
+            << config->GraphicsConfig()->GetWindowWidth() << "x" << config->GraphicsConfig()->GetWindowHeight();
     }
     else
     {
         // Otherwise we do a fullscreen window.
         config->GraphicsConfig()->SetWindowDimensions( screenDimensions );
         config->GraphicsConfig()->SetWindowPosition( glm::ivec2( 0, 0 ) );
-    }
-
-    // Here we create a temporary window so that we can initialize the OpenGL extension methods used to create
-    // the context we want.
-    HWND temp_h_wnd = CreateWindowEx( NULL, className.c_str(), applicationName.c_str(), WS_POPUP, 100, 100, 100, 100,
-                                      NULL, NULL, hInstance, this );
-    if( NULL == temp_h_wnd )
-    {
-        return false;
-    }
-    ShowWindow( temp_h_wnd, SW_HIDE );
-    if( renderer->initializeTemporaryExtensions( temp_h_wnd ) == false )
-    {
-        DestroyWindow( temp_h_wnd );
-        temp_h_wnd = NULL;
-
-        return false;
+        message << "Initial window set to fullscreen mode with dimensions " << screenDimensions.x << "x" << screenDimensions.y;
     }
 
     // And now we can finally create the target context
@@ -255,16 +264,22 @@ bool Application::initializeWindow( void )
                            this );
     if( NULL == hWnd )
     {
+        logger->Log( LOG_TYPE::ERR, "Initialization Error", "Error creating window handle." );
         return false;
     }
+
+    logger->Log( LOG_TYPE::INFO, "Window Created", message.str() );
     windowActivated = false;
     if( renderer->Initialize( hWnd ) == false )
     {
         DestroyWindow( hWnd );
         hWnd = NULL;
+        logger->Log( LOG_TYPE::ERR, "Initialization Error", "Error initializing renderer." );
 
         return false;
     }
+
+    logger->Log( LOG_TYPE::INFO, "Renderer Initialized", "Initialization of render context complete." );
 
     // Destroy the temporary window
     DestroyWindow( temp_h_wnd );
@@ -296,14 +311,16 @@ bool Application::resizeWindow( unsigned int width, unsigned int height )
     config->GraphicsConfig()->SetWindowPosition( glm::ivec2( x, y ) );
     
     ShowWindow( hWnd, SW_HIDE );
-
     SetWindowPos( hWnd, HWND_TOP,
                   x, y,
                   windowWidth,
                   windowHeight,
                   SWP_SHOWWINDOW );
-    
     ShowWindow( hWnd, SW_SHOW );
+
+    std::stringstream message;
+    message << "Resized window to " << windowWidth << "x" << windowHeight << " at position (" << x << ", " << y << ")";
+    logger->Log( LOG_TYPE::INFO, "Resized window", message.str() );
 
     return true;
 }
@@ -320,11 +337,18 @@ bool Application::resizeWindow( unsigned int x, unsigned int y, unsigned int wid
     int yPos = config->GraphicsConfig()->GetWindowYPosition();
 
 
+    ShowWindow( hWnd, SW_HIDE );
     SetWindowPos( hWnd, HWND_TOP,
                   xPos, yPos,
                   windowWidth,
                   windowHeight,
                   SWP_SHOWWINDOW );
+    ShowWindow( hWnd, SW_SHOW );
+    
+    std::stringstream message;
+    message << "Resized window to " << windowWidth << "x" << windowHeight << " at position (" << xPos << ", " << yPos << ")";
+    logger->Log( LOG_TYPE::INFO, "Resized window", message.str() );
+    
     return true;
 }
 
@@ -342,24 +366,31 @@ void Application::shutdownWindow( void )
     DestroyWindow( hWnd );
     UnregisterClass( className.c_str(), hInstance );
     hInstance = NULL;
+
+    logger->Log( LOG_TYPE::INFO, "Window Shutdown", "Window cleanup completed." );
 }
 
 void Application::toggleFullscreen( void )
 {
     bool wasFullscreen = config->GraphicsConfig()->GetFullscreen();
     config->GraphicsConfig()->SetFullscreen( !wasFullscreen );
+    std::string message;
     if( wasFullscreen == false )
     {
         // was fullscreen -> windowed
         resizeWindow( config->GraphicsConfig()->GetScreenWidth(),
                       config->GraphicsConfig()->GetScreenHeight() );
+        message = "Switched from fullscreen to windowed mode.";
     }
     else
     {
         // was windowed -> fullscreen
         resizeWindow( config->GraphicsConfig()->GetDefaultWindowWidth(),
                       config->GraphicsConfig()->GetDefaultWindowHeight() );
+        message = "Switched from windowed to fullscreen mode.";
     }
+
+    logger->Log( LOG_TYPE::INFO, "Fullscreen toggle", message );
 }
 
 bool Application::IsInitialized( void ) const

@@ -1,9 +1,11 @@
 #include <precompiled.h>
 #include <glrenderer.h>
 
-GLRenderer::GLRenderer( void )
+GLRenderer::GLRenderer( std::shared_ptr<Configuration> config_ptr, std::shared_ptr<Logger> logger_ptr )
 {
     hWnd = NULL;
+    config = config_ptr;
+    logger = logger_ptr;
 }
 
 bool GLRenderer::Initialize( HWND h_wnd )

@@ -1,11 +1,13 @@
 #pragma once
 #include <precompiled.h>
 
+class Logger;
+
 class Keyboard
 {
     friend class Application;
 public:
-    Keyboard();
+    Keyboard( std::shared_ptr<Logger> logger_ptr );
 
     ///
     /// \brief Gets the status of the given key.
@@ -31,4 +33,6 @@ private:
 
     std::array<bool, KEY_COUNT> downKeys;
     std::array<bool, KEY_COUNT> pressedKeys;
+
+    std::shared_ptr<Logger> logger;
 };

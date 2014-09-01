@@ -11,6 +11,7 @@ ArcSynthesis/BUILD/
 
 ArcSynthesis/LIB/
 ArcSynthesis/OUTPUT/
+ArcSynthesis/LOGS/
 ArcSynthesis/INC/GLEXT/
 ArcSynthesis/INC/GLM/
 ArcSynthesis/INC/RapidXML/

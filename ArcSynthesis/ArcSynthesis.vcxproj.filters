@@ -48,6 +48,12 @@
     <ClCompile Include="SRC\chapter_one.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SRC\logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\system_configuration.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="INC\precompiled.h">
@@ -78,6 +84,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="INC\chapter_one.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="INC\logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="INC\system_configuration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -157,6 +157,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SRC\chapter.cc" />
+    <ClCompile Include="SRC\chapter_one.cc" />
     <ClCompile Include="SRC\config.cc" />
     <ClCompile Include="SRC\glextensions.cc" />
     <ClCompile Include="SRC\graphics_configuration.cc" />
@@ -171,6 +173,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="INC\application.h" />
+    <ClInclude Include="INC\chapter.h" />
+    <ClInclude Include="INC\chapter_one.h" />
     <ClInclude Include="INC\config.h" />
     <ClInclude Include="INC\glextensions.h" />
     <ClInclude Include="INC\glrenderer.h" />

@@ -1,5 +1,6 @@
 #include <precompiled.h>
 #include <application.h>
+#include <chapter_one.h>
 
 LRESULT CALLBACK WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
@@ -46,13 +47,11 @@ Application::Application( const std::wstring &set_name )
     windowActivated = false;
     windowInitialized = false;
 
-    color = glm::vec3( 0.2, 0.4, 0.6 );
-    speed = glm::vec3( 0.1, 0.2, -0.4 );
-
     keyboard = nullptr;
     renderer = nullptr;
     timer = nullptr;
     config = nullptr;
+    currentChapter = nullptr;
 }
 
 Application::~Application( void )
@@ -79,6 +78,9 @@ bool Application::Initialize( void )
 
     timer = std::make_shared<Timer>();
     timer->SetTime();
+
+    currentChapter = std::make_shared<ChapterOne>( keyboard, config );
+    currentChapter->Initialize();
 
     initialized = true;
 
@@ -146,17 +148,22 @@ bool Application::Run( void )
     return true;
 }
 
-
-void Application::Shutdown( void )
+void Application::step( void )
 {
-    renderer->Shutdown();
-    shutdownWindow();
+    currentChapter->Step( timeStep );
 }
 
 void Application::draw( void )
 {
-    renderer->SetClearColor( color );
+    currentChapter->Draw();
     renderer->Draw();
+}
+
+void Application::Shutdown( void )
+{
+    currentChapter->Shutdown();
+    renderer->Shutdown();
+    shutdownWindow();
 }
 
 bool Application::initializeWindow( void )
@@ -352,44 +359,6 @@ void Application::toggleFullscreen( void )
         // was windowed -> fullscreen
         resizeWindow( config->GraphicsConfig()->GetDefaultWindowWidth(),
                       config->GraphicsConfig()->GetDefaultWindowHeight() );
-    }
-}
-
-void Application::step( void )
-{
-    color.r += speed.r * timeStep;
-    color.g += speed.g * timeStep;
-    color.b += speed.b * timeStep;
-
-    if( color.r >= 1.0 )
-    {
-        color.r = 1.0;
-        speed.r = -speed.r;
-    }
-    else if( color.r <= 0.0 )
-    {
-        color.r = 0.0;
-        speed.r = -speed.r;
-    }
-    if( color.g >= 1.0 )
-    {
-        color.g = 1.0;
-        speed.g = -speed.g;
-    }
-    else if( color.g <= 0.0 )
-    {
-        color.g = 0.0;
-        speed.g = -speed.g;
-    }
-    if( color.b >= 1.0 )
-    {
-        color.b = 1.0;
-        speed.b = -speed.b;
-    }
-    else if( color.b <= 0.0 )
-    {
-        color.b = 0.0;
-        speed.b = -speed.b;
     }
 }
 

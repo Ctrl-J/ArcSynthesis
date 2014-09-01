@@ -5,6 +5,7 @@
 #include <keyboard.h>
 #include <timer.h>
 #include <config.h>
+#include <chapter.h>
 
 class Application
 {
@@ -74,6 +75,8 @@ private:
     double timeStep;
 
     std::shared_ptr<Configuration> config;
+
+    std::shared_ptr<Chapter> currentChapter;
 
     bool initialized;
     bool done;

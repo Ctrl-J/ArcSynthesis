@@ -42,6 +42,12 @@
     <ClCompile Include="SRC\config.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SRC\chapter.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\chapter_one.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="INC\precompiled.h">
@@ -66,6 +72,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="INC\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="INC\chapter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="INC\chapter_one.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

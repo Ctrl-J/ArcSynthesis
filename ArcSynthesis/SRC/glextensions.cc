@@ -12,6 +12,7 @@ PFNGLCOMPILESHADERPROC              glCompileShader = NULL;
 PFNGLCREATEPROGRAMPROC              glCreateProgram = NULL;
 PFNGLCREATESHADERPROC               glCreateShader = NULL;
 PFNGLDELETESHADERPROC               glDeleteShader = NULL;
+PFNGLDISABLEVERTEXATTRIBARRAYPROC   glDisableVertexAttribArray = NULL;
 PFNGLENABLEVERTEXATTRIBARRAYPROC    glEnableVertexAttribArray = NULL;
 PFNGLGENBUFFERSPROC                 glGenBuffers = NULL;
 PFNGLGENVERTEXARRAYSPROC            glGenVertexArrays = NULL;
@@ -96,6 +97,12 @@ bool LoadGLExtensions( void )
 
     glDeleteShader = ( PFNGLDELETESHADERPROC )wglGetProcAddress( "glDeleteShader" );
     if( glDeleteShader == NULL )
+    {
+        return false;
+    }
+    
+    glDisableVertexAttribArray = ( PFNGLDISABLEVERTEXATTRIBARRAYPROC )wglGetProcAddress( "glDisableVertexAttribArray" );
+    if( glDisableVertexAttribArray == NULL )
     {
         return false;
     }

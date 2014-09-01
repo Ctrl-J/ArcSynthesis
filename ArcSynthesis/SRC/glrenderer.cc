@@ -108,9 +108,6 @@ bool GLRenderer::Initialize( HWND h_wnd )
 
 void GLRenderer::Draw( void )
 {
-    glClear( GL_COLOR_BUFFER_BIT );
-    glFlush();
-
     SwapBuffers( deviceContext );
 }
 

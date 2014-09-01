@@ -20,9 +20,16 @@ public:
     void Shutdown( void );
 
 private:
+
+    void initArrays( void );
+
     glm::vec3 color;
     std::string filename;
     std::shared_ptr<ChapterData> chapterData;
     std::shared_ptr<ShaderManager> shaderManager;
 
+    std::vector<float> vertexData;
+
+    GLuint position_buffer_object;
+    GLuint vertex_array_object;
 };

@@ -157,7 +157,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SRC\config.cc" />
     <ClCompile Include="SRC\glextensions.cc" />
+    <ClCompile Include="SRC\graphics_configuration.cc" />
     <ClCompile Include="SRC\keyboard.cc" />
     <ClCompile Include="SRC\main.cc" />
     <ClCompile Include="SRC\precompiled.cc">
@@ -169,12 +171,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="INC\application.h" />
+    <ClInclude Include="INC\config.h" />
     <ClInclude Include="INC\glextensions.h" />
     <ClInclude Include="INC\glrenderer.h" />
+    <ClInclude Include="INC\graphics_configuration.h" />
     <ClInclude Include="INC\keyboard.h" />
     <ClInclude Include="INC\precompiled.h" />
     <ClInclude Include="INC\timer.h" />
     <ClCompile Include="SRC\application.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="BUILD\Debug\Config.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

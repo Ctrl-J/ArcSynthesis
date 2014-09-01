@@ -1,9 +1,10 @@
 #pragma once
 #include <precompiled.h>
 
-#include <GLRenderer.h>
+#include <glrenderer.h>
 #include <keyboard.h>
 #include <timer.h>
+#include <config.h>
 
 class Application
 {
@@ -69,6 +70,7 @@ private:
     double accumulatedTime;
     double timeStep;
 
+    std::shared_ptr<Configuration> config;
 
     bool initialized;
     bool done;
@@ -76,15 +78,6 @@ private:
 
     bool windowActivated;
     bool windowInitialized;
-
-    int windowWidth;
-    int windowHeight;
-    int screenWidth;
-    int screenHeight;
-    int windowXPosition;
-    int windowYPosition;
-
-    bool isWindowed;
 
     glm::vec3 color;
     glm::vec3 speed;

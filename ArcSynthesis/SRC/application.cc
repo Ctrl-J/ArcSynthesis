@@ -46,20 +46,13 @@ Application::Application( const std::wstring &set_name )
     windowActivated = false;
     windowInitialized = false;
 
-    windowWidth = 480;
-    windowHeight = 300;
-    screenWidth = 0;
-    screenHeight = 0;
-    windowXPosition = 0;
-    windowYPosition = 0;
-
     color = glm::vec3( 0.2, 0.4, 0.6 );
     speed = glm::vec3( 0.1, 0.2, -0.4 );
-    isWindowed = false;
 
     keyboard = nullptr;
     renderer = nullptr;
     timer = nullptr;
+    config = nullptr;
 }
 
 Application::~Application( void )
@@ -69,6 +62,9 @@ Application::~Application( void )
 
 bool Application::Initialize( void )
 {
+    config = std::make_shared<Configuration>();
+    config->LoadConfiguration( "config.xml" );
+
     renderer = std::make_shared<GLRenderer>();
     if( initializeWindow() == false )
     {
@@ -183,20 +179,24 @@ bool Application::initializeWindow( void )
     // The following code assumes we only have one monitor and are displaying on the primary monitor
 
     // The following code sets up a windowed display that is centered on the screen
-    screenWidth = GetSystemMetrics( SM_CXSCREEN );
-    screenHeight = GetSystemMetrics( SM_CYSCREEN );
-
-    if( windowWidth > screenWidth )
+    int value = GetSystemMetrics( SM_CXSCREEN );
+    if( config->GraphicsConfig()->GetWindowWidth() > value )
     {
-        windowWidth = screenWidth - 20;
+        config->GraphicsConfig()->SetWindowWidth( value - 20 );
     }
-    if( windowHeight > screenHeight )
+    config->GraphicsConfig()->SetScreenWidth( value );
+    
+    value = GetSystemMetrics( SM_CYSCREEN );
+    if( config->GraphicsConfig()->GetWindowHeight() > value )
     {
-        windowHeight = screenHeight - 20;
+        config->GraphicsConfig()->SetWindowHeight( value - 20 );
     }
+    config->GraphicsConfig()->SetScreenHeight( value );
 
-    windowXPosition = ( screenWidth - windowWidth ) / 2;
-    windowYPosition = ( screenHeight - windowHeight ) / 2;
+    int x_position = ( config->GraphicsConfig()->GetScreenWidth() - config->GraphicsConfig()->GetWindowWidth() ) / 2;
+    int y_position = ( config->GraphicsConfig()->GetScreenHeight() - config->GraphicsConfig()->GetWindowHeight() ) / 2;
+
+    config->GraphicsConfig()->SetWindowPosition( glm::ivec2( x_position, y_position ) );
 
     // Here we create a temporary window so that we can initialize the OpenGL extension methods used to create
     // the context we want.
@@ -216,8 +216,18 @@ bool Application::initializeWindow( void )
     }
 
     // And now we can finally create the target context
-    hWnd = CreateWindowEx( NULL, className.c_str(), applicationName.c_str(), WS_POPUP, windowXPosition, windowYPosition,
-                            windowWidth, windowHeight, NULL, NULL, hInstance, this );
+    hWnd = CreateWindowEx( NULL, 
+                           className.c_str(), 
+                           applicationName.c_str(), 
+                           WS_POPUP, 
+                           config->GraphicsConfig()->GetWindowXPosition(), 
+                           config->GraphicsConfig()->GetWindowYPosition(),
+                           config->GraphicsConfig()->GetWindowWidth(),
+                           config->GraphicsConfig()->GetWindowHeight(),
+                           NULL, 
+                           NULL, 
+                           hInstance, 
+                           this );
     if( NULL == hWnd )
     {
         return false;

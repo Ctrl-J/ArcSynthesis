@@ -33,12 +33,18 @@
     <ClCompile Include="SRC\glextensions.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SRC\application.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\graphics_configuration.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\config.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="INC\precompiled.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\application.cc">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="INC\application.h">
@@ -56,5 +62,14 @@
     <ClInclude Include="INC\glrenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="INC\graphics_configuration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="INC\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="BUILD\Debug\Config.xml" />
   </ItemGroup>
 </Project>

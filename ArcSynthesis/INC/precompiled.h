@@ -17,6 +17,10 @@
 #include <GLM\gtc\constants.hpp>
 #include <GLM\gtc\type_ptr.hpp>
 
+// RapidXML for loading of config files and shaders
+#include <RapidXML\rapidxml.hpp>
+#include <RapidXML\rapidxml_utils.hpp>
+
 // Basic stream manipulation, memory (for c++11 smart pointers), and basic data structures.
 #include <array>
 #include <ctime>

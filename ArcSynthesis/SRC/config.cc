@@ -32,6 +32,9 @@ bool Configuration::LoadConfiguration( const std::string &set_filename )
         isLoaded = false;
         return false;
     }
+
+    isLoaded = true;
+    return true;
 }
 
 std::shared_ptr<GraphicsConfiguration> Configuration::GraphicsConfig( void )

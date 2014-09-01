@@ -45,13 +45,25 @@
     <ClCompile Include="SRC\chapter.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SRC\chapter_one.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SRC\logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SRC\system_configuration.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\chapter_zero.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\chapter_one.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\chapter_data.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\shader.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\shader_manager.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,17 +95,30 @@
     <ClInclude Include="INC\chapter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="INC\chapter_one.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="INC\logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="INC\system_configuration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="INC\chapter_zero.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="INC\chapter_one.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="INC\chapter_data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="INC\shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="INC\shader_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="BUILD\Debug\Config.xml" />
+    <Xml Include="DATA\chapterOne.xml" />
   </ItemGroup>
 </Project>

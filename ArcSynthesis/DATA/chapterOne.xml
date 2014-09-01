@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+    <shaders>
+        <shader Name="basic">
+            <vertexcode>
+                #version 330
+                layout(location = 0) in vec4 position;
+                void main()
+                {
+                    gl_Position = position;
+                }
+            </vertexcode>
+            <fragmentcode>
+                #version 330
+                out vec4 outputColor;
+                void main()
+                {
+                    outputColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+                }
+            </fragmentcode>
+        </shader>
+    </shaders>    
+</data>

@@ -1,5 +1,6 @@
 #include <precompiled.h>
 #include <application.h>
+#include <chapter_zero.h>
 #include <chapter_one.h>
 
 LRESULT CALLBACK WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
@@ -82,7 +83,7 @@ bool Application::Initialize( void )
     timer = std::make_shared<Timer>();
     timer->SetTime();
 
-    currentChapter = std::make_shared<ChapterOne>( config, keyboard, logger );
+    currentChapter = std::make_shared<ChapterOne>( "chapterOne.xml", config, keyboard, logger );
     currentChapter->Initialize();
 
     initialized = true;

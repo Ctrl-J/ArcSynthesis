@@ -158,7 +158,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="SRC\chapter.cc" />
+    <ClCompile Include="SRC\chapter_data.cc" />
     <ClCompile Include="SRC\chapter_one.cc" />
+    <ClCompile Include="SRC\chapter_zero.cc" />
     <ClCompile Include="SRC\config.cc" />
     <ClCompile Include="SRC\glextensions.cc" />
     <ClCompile Include="SRC\graphics_configuration.cc" />
@@ -170,13 +172,17 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="SRC\glrenderer.cc" />
+    <ClCompile Include="SRC\shader.cc" />
+    <ClCompile Include="SRC\shader_manager.cc" />
     <ClCompile Include="SRC\system_configuration.cc" />
     <ClCompile Include="SRC\timer.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="INC\application.h" />
     <ClInclude Include="INC\chapter.h" />
+    <ClInclude Include="INC\chapter_data.h" />
     <ClInclude Include="INC\chapter_one.h" />
+    <ClInclude Include="INC\chapter_zero.h" />
     <ClInclude Include="INC\config.h" />
     <ClInclude Include="INC\glextensions.h" />
     <ClInclude Include="INC\glrenderer.h" />
@@ -184,12 +190,15 @@
     <ClInclude Include="INC\keyboard.h" />
     <ClInclude Include="INC\logger.h" />
     <ClInclude Include="INC\precompiled.h" />
+    <ClInclude Include="INC\shader.h" />
+    <ClInclude Include="INC\shader_manager.h" />
     <ClInclude Include="INC\system_configuration.h" />
     <ClInclude Include="INC\timer.h" />
     <ClCompile Include="SRC\application.cc" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="BUILD\Debug\Config.xml" />
+    <Xml Include="DATA\chapterOne.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

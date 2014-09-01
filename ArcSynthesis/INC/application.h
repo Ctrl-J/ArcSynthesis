@@ -87,7 +87,4 @@ private:
 
     bool windowActivated;
     bool windowInitialized;
-
-    glm::vec3 color;
-    glm::vec3 speed;
 };

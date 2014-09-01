@@ -1,5 +1,6 @@
 #include <precompiled.h>
 #include <glrenderer.h>
+#include <logger.h>
 
 GLRenderer::GLRenderer( std::shared_ptr<Configuration> config_ptr, std::shared_ptr<Logger> logger_ptr )
 {
@@ -35,7 +36,7 @@ bool GLRenderer::Initialize( HWND h_wnd )
     deviceContext = GetDC( h_wnd );
     if( NULL == deviceContext )
     {
-        MessageBox( NULL, L"Could not get the device context", L"Render Initialization", MB_OK | MB_ICONERROR );
+        logger->Log( LOG_TYPE::CRITICAL, "Renderer Initialization Error", "Could not get device context." );
         return false;
     }
 
@@ -43,14 +44,14 @@ bool GLRenderer::Initialize( HWND h_wnd )
     result = wglChoosePixelFormatARB( deviceContext, attribute_list_int, NULL, 1, &pixel_format, &format_count );
     if( GL_TRUE != result )
     {
-        MessageBox( NULL, L"Could not choose the pixel format.", L"Render Initialization Error", MB_OK | MB_ICONERROR );
+        logger->Log( LOG_TYPE::CRITICAL, "Renderer Initialization Error", "Could not choose the pixel format." );
         return false;
     }
 
     result = SetPixelFormat( deviceContext, pixel_format, &pixel_format_descriptor );
     if( GL_TRUE != result )
     {
-        MessageBox( NULL, L"Error setting pixel format", L"Render Initialization", MB_OK | MB_ICONERROR );
+        logger->Log( LOG_TYPE::CRITICAL, "Renderer Initialization Error", "Error setting the pixel format." );
         return false;
     }
 
@@ -66,14 +67,14 @@ bool GLRenderer::Initialize( HWND h_wnd )
     renderContext = wglCreateContextAttribsARB( deviceContext, 0, attribute_list );
     if( NULL == renderContext )
     {
-        MessageBox( NULL, L"Could not create the rendering context.", L"Render Initialization Error", MB_OK | MB_ICONERROR );
+        logger->Log( LOG_TYPE::CRITICAL, "Renderer Initialization Error", "Error creating rendering context." );
         return false;
     }
 
     result = wglMakeCurrent( deviceContext, renderContext );
     if( GL_TRUE != result )
     {
-        MessageBox( NULL, L"Could not make the context current.", L"Render Initialization Error", MB_OK | MB_ICONERROR );
+        logger->Log( LOG_TYPE::CRITICAL, "Renderer Initialization Error", "Error making rendering context current." );
         return false;
     }
 
@@ -123,6 +124,7 @@ void GLRenderer::Shutdown( void )
     renderContext = NULL;
     ReleaseDC( hWnd, deviceContext );
     deviceContext = NULL;
+    logger->Log( LOG_TYPE::INFO, "Render Shutdown", "device and render contexts deleted." );
 }
 
 bool GLRenderer::initializeTemporaryExtensions( HWND h_wnd )
@@ -134,34 +136,34 @@ bool GLRenderer::initializeTemporaryExtensions( HWND h_wnd )
     deviceContext = GetDC( h_wnd );
     if( NULL == deviceContext )
     {
-        MessageBox( NULL, L"Could not get device context", L"Renderer Initialization", MB_OK | MB_ICONERROR );
+        logger->Log( LOG_TYPE::CRITICAL, "Renderer Initialization Error", "Could not create temporary device context." );
         return false;
     }
 
     result = SetPixelFormat( deviceContext, 1, &pixel_format_descriptor );
     if( GL_TRUE != result )
     {
-        MessageBox( NULL, L"Could not set temporary pixel format.", L"Renderer Initialization", MB_OK | MB_ICONERROR );
+        logger->Log( LOG_TYPE::CRITICAL, "Renderer Initialization Error", "Could not set temporary pixel format." );
         return false;
     }
 
     tempRenderContext = wglCreateContext( deviceContext );
     if( NULL == tempRenderContext )
     {
-        MessageBox( NULL, L"Could not get temporary OpenGL context", L"Renderer Initialization", MB_OK | MB_ICONERROR );
+        logger->Log( LOG_TYPE::CRITICAL, "Renderer Initialization Error", "Could not set create temporary OpenGL context." );
         return false;
     }
 
     result = wglMakeCurrent( deviceContext, tempRenderContext );
     if( GL_TRUE != result )
     {
-        MessageBox( NULL, L"Could not make render context current.", L"Renderer Initialization", MB_OK | MB_ICONERROR );
+        logger->Log( LOG_TYPE::CRITICAL, "Renderer Initialization Error", "Could not set make temporary OpenGL context current." );
         return false;
     }
 
     if( LoadTempGLExtensions() == false )
     {
-        MessageBox( NULL, L"Could not load extensions", L"Renderer Initialization", MB_OK | MB_ICONERROR );
+        logger->Log( LOG_TYPE::CRITICAL, "Renderer Initialization Error", "Could not load temporary OpenGL extensions." );
         return false;
     }
 
@@ -169,6 +171,7 @@ bool GLRenderer::initializeTemporaryExtensions( HWND h_wnd )
     wglMakeCurrent( NULL, NULL );
     ReleaseDC( h_wnd, deviceContext );
     deviceContext = NULL;
+    logger->Log( LOG_TYPE::INFO, "Renderer Initialization", "Loaded temporary OpenGL extensions." );
 }
 
 void GLRenderer::SetClearColor( glm::vec3 targetColor )

@@ -175,3 +175,8 @@ void GLRenderer::SetClearColor( glm::vec3 targetColor )
 {
     glClearColor( targetColor.r, targetColor.g, targetColor.b, 1.0f );
 }
+
+void GLRenderer::resizeViewport( int width, int height )
+{
+    glViewport( 0, 0, width, height );
+}

@@ -14,10 +14,12 @@ public:
     void Draw( void );
     void Shutdown( void );
 
+
     void SetClearColor( glm::vec3 targetColor );
 
 private:
     bool initializeTemporaryExtensions( HWND h_wnd );
+    void resizeViewport( int width, int height );
     
     HWND hWnd;
     HDC deviceContext;

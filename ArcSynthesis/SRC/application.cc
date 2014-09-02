@@ -302,26 +302,14 @@ bool Application::resizeWindow( unsigned int width, unsigned int height )
 {
     // First set the dimensions. This also handles sizing the dimensions( window will never be smaller than 100x100 )
     config->GraphicsConfig()->SetWindowDimensions( glm::ivec2( width, height ) );
-    int windowWidth = config->GraphicsConfig()->GetWindowWidth();
-    int windowHeight = config->GraphicsConfig()->GetWindowHeight();
+    glm::ivec2 windowDimensions = config->GraphicsConfig()->GetWindowDimensions();
+    glm::ivec2 screeenDimensions = config->GraphicsConfig()->GetScreenDimensions();
 
     // note, these will work fine for fullscreen as well, because screen width - fullscreen window size = 0
-    int x = ( config->GraphicsConfig()->GetScreenWidth() - windowWidth ) / 2;
-    int y = ( config->GraphicsConfig()->GetScreenHeight() - windowHeight ) / 2;
+    int x = ( screeenDimensions.x - windowDimensions.x ) / 2;
+    int y = ( screeenDimensions.y - windowDimensions.y ) / 2;
 
-    config->GraphicsConfig()->SetWindowPosition( glm::ivec2( x, y ) );
-    
-    ShowWindow( hWnd, SW_HIDE );
-    SetWindowPos( hWnd, HWND_TOP,
-                  x, y,
-                  windowWidth,
-                  windowHeight,
-                  SWP_SHOWWINDOW );
-    ShowWindow( hWnd, SW_SHOW );
-
-    std::stringstream message;
-    message << "Resized window to " << windowWidth << "x" << windowHeight << " at position (" << x << ", " << y << ")";
-    logger->Log( LOG_TYPE::INFO, "Resized window", message.str() );
+    resizeWindow( x, y, windowDimensions.x, windowDimensions.y );
 
     return true;
 }
@@ -332,24 +320,27 @@ bool Application::resizeWindow( unsigned int x, unsigned int y, unsigned int wid
     config->GraphicsConfig()->SetWindowDimensions( glm::ivec2( width, height ) );
     int windowWidth = config->GraphicsConfig()->GetWindowWidth();
     int windowHeight = config->GraphicsConfig()->GetWindowHeight();
+    int screenWidth = config->GraphicsConfig()->GetScreenWidth();
+    int screenHeight = config->GraphicsConfig()->GetScreenHeight();
 
     config->GraphicsConfig()->SetWindowPosition( glm::ivec2( x, y ) );
     int xPos = config->GraphicsConfig()->GetWindowXPosition();
     int yPos = config->GraphicsConfig()->GetWindowYPosition();
-
-
+    
     ShowWindow( hWnd, SW_HIDE );
     SetWindowPos( hWnd, HWND_TOP,
                   xPos, yPos,
                   windowWidth,
                   windowHeight,
                   SWP_SHOWWINDOW );
+    renderer->resizeViewport( windowWidth, windowHeight );
+
     ShowWindow( hWnd, SW_SHOW );
-    
+
     std::stringstream message;
     message << "Resized window to " << windowWidth << "x" << windowHeight << " at position (" << xPos << ", " << yPos << ")";
     logger->Log( LOG_TYPE::INFO, "Resized window", message.str() );
-    
+
     return true;
 }
 

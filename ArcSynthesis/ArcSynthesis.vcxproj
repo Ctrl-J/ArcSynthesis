@@ -107,8 +107,9 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <PrecompiledHeaderFile>precompiled.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>ArcSynth/precompiled.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(ProjectDir)\OUTPUT\$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AdditionalIncludeDirectories>$(ProjectDir)SRC\ArcSynth\Win32\;$(ProjectDir)SRC\ArcSynth\OpenGL\;$(ProjectDir)SRC\ArcSynth\Config\;$(ProjectDir)SRC\ArcSynth\Chapters\;$(ProjectDir)SRC\ArcSynth\Abstracts\;$(ProjectDir)SRC\ArcSynth\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -144,8 +145,9 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <PrecompiledHeaderFile>precompiled.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>ArcSynth/precompiled.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(ProjectDir)\OUTPUT\$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AdditionalIncludeDirectories>$(ProjectDir)SRC\ArcSynth\Win32\;$(ProjectDir)SRC\ArcSynth\OpenGL\;$(ProjectDir)SRC\ArcSynth\Config\;$(ProjectDir)SRC\ArcSynth\Chapters\;$(ProjectDir)SRC\ArcSynth\Abstracts\;$(ProjectDir)SRC\ArcSynth\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -157,44 +159,46 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="SRC\chapter.cc" />
-    <ClCompile Include="SRC\chapter_data.cc" />
-    <ClCompile Include="SRC\chapter_one.cc" />
-    <ClCompile Include="SRC\chapter_zero.cc" />
-    <ClCompile Include="SRC\config.cc" />
-    <ClCompile Include="SRC\glextensions.cc" />
-    <ClCompile Include="SRC\graphics_configuration.cc" />
-    <ClCompile Include="SRC\keyboard.cc" />
-    <ClCompile Include="SRC\logger.cpp" />
-    <ClCompile Include="SRC\main.cc" />
-    <ClCompile Include="SRC\precompiled.cc">
+    <ClCompile Include="SRC\ArcSynth\Abstracts\chapter.cc" />
+    <ClCompile Include="SRC\ArcSynth\Chapters\chapter_one.cc" />
+    <ClCompile Include="SRC\ArcSynth\Chapters\chapter_zero.cc" />
+    <ClCompile Include="SRC\ArcSynth\Config\chapter_data.cc" />
+    <ClCompile Include="SRC\ArcSynth\Config\config.cc" />
+    <ClCompile Include="SRC\ArcSynth\Config\graphics_configuration.cc" />
+    <ClCompile Include="SRC\ArcSynth\OpenGL\glrenderer.cc" />
+    <ClCompile Include="SRC\ArcSynth\OpenGL\shader.cc" />
+    <ClCompile Include="SRC\ArcSynth\Config\system_configuration.cc" />
+    <ClCompile Include="SRC\ArcSynth\Win32\glextensions.cc" />
+    <ClCompile Include="SRC\ArcSynth\keyboard.cc" />
+    <ClCompile Include="SRC\ArcSynth\logger.cpp" />
+    <ClCompile Include="SRC\ArcSynth\Win32\application.cc" />
+    <ClCompile Include="SRC\ArcSynth\Win32\win_main.cc" />
+    <ClCompile Include="SRC\ArcSynth\precompiled.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ArcSynth/precompiled.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ArcSynth/precompiled.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="SRC\glrenderer.cc" />
-    <ClCompile Include="SRC\shader.cc" />
-    <ClCompile Include="SRC\shader_manager.cc" />
-    <ClCompile Include="SRC\system_configuration.cc" />
-    <ClCompile Include="SRC\timer.cc" />
+    <ClCompile Include="SRC\ArcSynth\OpenGL\shader_manager.cc" />
+    <ClCompile Include="SRC\ArcSynth\timer.cc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="INC\application.h" />
-    <ClInclude Include="INC\chapter.h" />
-    <ClInclude Include="INC\chapter_data.h" />
-    <ClInclude Include="INC\chapter_one.h" />
-    <ClInclude Include="INC\chapter_zero.h" />
-    <ClInclude Include="INC\config.h" />
-    <ClInclude Include="INC\glextensions.h" />
-    <ClInclude Include="INC\glrenderer.h" />
-    <ClInclude Include="INC\graphics_configuration.h" />
-    <ClInclude Include="INC\keyboard.h" />
-    <ClInclude Include="INC\logger.h" />
-    <ClInclude Include="INC\precompiled.h" />
-    <ClInclude Include="INC\shader.h" />
-    <ClInclude Include="INC\shader_manager.h" />
-    <ClInclude Include="INC\system_configuration.h" />
-    <ClInclude Include="INC\timer.h" />
-    <ClCompile Include="SRC\application.cc" />
+    <ClInclude Include="INC\ArcSynth\Win32\application.h" />
+    <ClInclude Include="INC\ArcSynth\Abstracts\chapter.h" />
+    <ClInclude Include="INC\ArcSynth\Config\chapter_data.h" />
+    <ClInclude Include="INC\ArcSynth\Chapters\chapter_one.h" />
+    <ClInclude Include="INC\ArcSynth\Chapters\chapter_zero.h" />
+    <ClInclude Include="INC\ArcSynth\Config\config.h" />
+    <ClInclude Include="INC\ArcSynth\Win32\glextensions.h" />
+    <ClInclude Include="INC\ArcSynth\OpenGL\glrenderer.h" />
+    <ClInclude Include="INC\ArcSynth\Config\graphics_configuration.h" />
+    <ClInclude Include="INC\ArcSynth\keyboard.h" />
+    <ClInclude Include="INC\ArcSynth\logger.h" />
+    <ClInclude Include="INC\ArcSynth\precompiled.h" />
+    <ClInclude Include="INC\ArcSynth\OpenGL\shader.h" />
+    <ClInclude Include="INC\ArcSynth\OpenGL\shader_manager.h" />
+    <ClInclude Include="INC\ArcSynth\Config\system_configuration.h" />
+    <ClInclude Include="INC\ArcSynth\timer.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="BUILD\Debug\Config.xml" />

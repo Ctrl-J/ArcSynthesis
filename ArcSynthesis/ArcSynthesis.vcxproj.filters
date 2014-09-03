@@ -15,105 +15,138 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SRC\main.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\precompiled.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\timer.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\keyboard.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\glrenderer.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\glextensions.cc">
+    <ClCompile Include="SRC\shader.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SRC\application.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SRC\graphics_configuration.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\config.cc">
+    <ClCompile Include="SRC\glextensions.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SRC\chapter.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SRC\logger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\system_configuration.cc">
+    <ClCompile Include="SRC\chapter_one.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SRC\chapter_zero.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SRC\chapter_one.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SRC\chapter_data.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SRC\shader.cc">
+    <ClCompile Include="SRC\config.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SRC\shader_manager.cc">
+    <ClCompile Include="SRC\graphics_configuration.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\system_configuration.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\glrenderer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\Abstracts\chapter.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\Chapters\chapter_one.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\Chapters\chapter_zero.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\Config\chapter_data.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\Config\config.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\Config\graphics_configuration.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\Config\system_configuration.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\OpenGL\glrenderer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\OpenGL\shader.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\OpenGL\shader_manager.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\Win32\application.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\Win32\glextensions.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\Win32\win_main.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\keyboard.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\precompiled.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\timer.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="INC\precompiled.h">
+    <ClInclude Include="INC\ArcSynth\keyboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="INC\application.h">
+    <ClInclude Include="INC\ArcSynth\logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="INC\timer.h">
+    <ClInclude Include="INC\ArcSynth\precompiled.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="INC\keyboard.h">
+    <ClInclude Include="INC\ArcSynth\timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="INC\glextensions.h">
+    <ClInclude Include="INC\ArcSynth\Abstracts\chapter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="INC\glrenderer.h">
+    <ClInclude Include="INC\ArcSynth\Chapters\chapter_one.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="INC\graphics_configuration.h">
+    <ClInclude Include="INC\ArcSynth\Chapters\chapter_zero.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="INC\config.h">
+    <ClInclude Include="INC\ArcSynth\Config\chapter_data.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="INC\chapter.h">
+    <ClInclude Include="INC\ArcSynth\Config\graphics_configuration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="INC\logger.h">
+    <ClInclude Include="INC\ArcSynth\Config\config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="INC\system_configuration.h">
+    <ClInclude Include="INC\ArcSynth\Config\system_configuration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="INC\chapter_zero.h">
+    <ClInclude Include="INC\ArcSynth\OpenGL\glrenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="INC\chapter_one.h">
+    <ClInclude Include="INC\ArcSynth\OpenGL\shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="INC\chapter_data.h">
+    <ClInclude Include="INC\ArcSynth\OpenGL\shader_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="INC\shader.h">
+    <ClInclude Include="INC\ArcSynth\Win32\application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="INC\shader_manager.h">
+    <ClInclude Include="INC\ArcSynth\Win32\glextensions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

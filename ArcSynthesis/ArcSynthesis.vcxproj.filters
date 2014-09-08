@@ -15,39 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SRC\shader.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\application.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\glextensions.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\chapter.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\chapter_one.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\chapter_zero.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\chapter_data.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\config.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\graphics_configuration.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\system_configuration.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\glrenderer.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SRC\ArcSynth\Abstracts\chapter.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -97,6 +64,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SRC\ArcSynth\timer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\Chapters\chapter_two.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -149,9 +119,13 @@
     <ClInclude Include="INC\ArcSynth\Win32\glextensions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="INC\ArcSynth\Chapters\chapter_two.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="BUILD\Debug\Config.xml" />
     <Xml Include="DATA\chapterOne.xml" />
+    <Xml Include="DATA\chapterTwo.xml" />
   </ItemGroup>
 </Project>

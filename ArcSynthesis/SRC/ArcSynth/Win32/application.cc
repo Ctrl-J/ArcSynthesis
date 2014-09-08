@@ -2,6 +2,7 @@
 #include <ArcSynth/Win32/application.h>
 #include <ArcSynth/Chapters/chapter_zero.h>
 #include <ArcSynth/Chapters/chapter_one.h>
+#include <ArcSynth/Chapters/chapter_two.h>
 
 LRESULT CALLBACK WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
@@ -83,7 +84,7 @@ bool Application::Initialize( void )
     timer = std::make_shared<Timer>();
     timer->SetTime();
 
-    currentChapter = std::make_shared<ChapterOne>( "chapterOne.xml", config, keyboard, logger );
+    currentChapter = std::make_shared<ChapterTwo>( "chapterTwo.xml", config, keyboard, logger );
     currentChapter->Initialize();
 
     initialized = true;

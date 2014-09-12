@@ -28,8 +28,10 @@ private:
     std::shared_ptr<ChapterData> chapterData;
     std::shared_ptr<ShaderManager> shaderManager;
 
-    std::vector<float> vertexData;
+    std::vector<glm::vec4> positionData;
+    std::vector<glm::vec4> colorData;
 
     GLuint position_buffer_object;
+    GLuint color_buffer_object;
     GLuint vertex_array_object;
 };

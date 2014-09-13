@@ -69,6 +69,9 @@
     <ClCompile Include="SRC\ArcSynth\Chapters\chapter_two.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\Chapters\chapter_three.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="INC\ArcSynth\keyboard.h">
@@ -122,10 +125,14 @@
     <ClInclude Include="INC\ArcSynth\Chapters\chapter_two.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="INC\ArcSynth\Chapters\chapter_three.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="BUILD\Debug\Config.xml" />
     <Xml Include="DATA\chapterOne.xml" />
     <Xml Include="DATA\chapterTwo.xml" />
+    <Xml Include="DATA\chapterThree.xml" />
   </ItemGroup>
 </Project>

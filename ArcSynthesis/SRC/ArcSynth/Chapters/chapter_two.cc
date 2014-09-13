@@ -66,6 +66,7 @@ void ChapterTwo::Draw( void )
 
 void ChapterTwo::Step( double time_step )
 {
+
 }
 
 void ChapterTwo::Shutdown( void )

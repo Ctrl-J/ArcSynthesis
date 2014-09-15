@@ -5,14 +5,14 @@
 
 class ChapterData;
 
-class ChapterOne : public Chapter
+class ChapterTwo : public Chapter
 {
 public:
-    ChapterOne( const std::string &chapter_filename, std::shared_ptr<Configuration> config_ptr,
+    ChapterTwo( const std::string &chapter_filename, std::shared_ptr<Configuration> config_ptr,
                 std::shared_ptr<Keyboard> keyboard_ptr, std::shared_ptr<Logger> logger_ptr );
-    ~ChapterOne();
-    ChapterOne( const ChapterOne &other ) = delete;
-    ChapterOne &operator= ( const ChapterOne &other ) = delete;
+    ~ChapterTwo();
+    ChapterTwo( const ChapterTwo &other ) = delete;
+    ChapterTwo &operator= ( const ChapterTwo &other ) = delete;
 
     void Initialize( void );
     void Draw( void );
@@ -28,8 +28,10 @@ private:
     std::shared_ptr<ChapterData> chapterData;
     std::shared_ptr<ShaderManager> shaderManager;
 
-    std::vector<float> vertexData;
+    std::vector<glm::vec4> positionData;
+    std::vector<glm::vec4> colorData;
 
     GLuint position_buffer_object;
+    GLuint color_buffer_object;
     GLuint vertex_array_object;
 };

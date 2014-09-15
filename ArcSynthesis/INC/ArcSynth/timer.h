@@ -26,14 +26,14 @@ public:
     /// Calculates the time (in double-precision seconds) since the timer was initialized or reset.
     /// Returns -1 if the timer has not been initialized.
     ///
-    double GetTime( void );
+    float GetTime( void );
 
     ///
     /// \brief Gets the time since GetDeltaTime has been called
     ///
     /// Used to get times (in double-precision seconds) between marked points in code (used for frame-times primarily.)
     ///
-    double GetDeltaTime( void );
+    float GetDeltaTime( void );
 
     ///
     /// \brief Resets the base time reference point without affecting the delta reference point.
@@ -41,7 +41,7 @@ public:
     /// Resets clocks so that subsequent calls to GetTime refer to this
     /// call point as the reference point. Returns the time since the last reset.
     ///
-    double ResetBaseTime( void );
+    float ResetBaseTime( void );
 
     ///
     /// \brief Returns true if the timer is ready to get values
@@ -56,7 +56,7 @@ private:
     /// Gets the difference between either the base clock reference point or the delta reference point
     /// and returns a double-precision value in seconds 
     ///
-    double getTimeDifference( bool delta );
+    float getTimeDifference( bool delta );
 
     /// Reference point for storing the time since the timer was initialized/reset
     __int64 timerReferencePoint;

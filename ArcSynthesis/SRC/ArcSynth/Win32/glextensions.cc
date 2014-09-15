@@ -24,9 +24,12 @@ PFNGLGETSHADERINFOLOGPROC           glGetShaderInfoLog = NULL;
 PFNGLGETSHADERIVPROC                glGetShaderIV = NULL;
 PFNGLGETUNIFORMBLOCKINDEXPROC       glGetUniformBlockIndex = NULL;
 PFNGLGETUNIFORMINDICESPROC          glGetUniformIndices = NULL;
+PFNGLGETUNIFORMLOCATIONPROC         glGetUniformLocation = NULL;
 PFNGLLINKPROGRAMPROC                glLinkProgram = NULL;
 PFNGLSHADERSOURCEPROC               glShaderSource = NULL;
+PFNGLUNIFORM3FPROC                  glUniform3f = NULL;
 PFNGLUNIFORMBLOCKBINDINGPROC        glUniformBlockBinding = NULL;
+PFNGLUNIFORMMATRIX4FVPROC           glUniformMatrix4fv = NULL;
 PFNGLUSEPROGRAMPROC                 glUseProgram = NULL;
 PFNGLVERTEXATTRIBPOINTERPROC        glVertexAttribPointer = NULL;
 PFNWGLCHOOSEPIXELFORMATARBPROC      wglChoosePixelFormatARB = NULL;
@@ -172,6 +175,12 @@ bool LoadGLExtensions( void )
     {
         return false;
     }
+    
+    glGetUniformLocation = ( PFNGLGETUNIFORMLOCATIONPROC )wglGetProcAddress( "glGetUniformLocation" );
+    if( glGetUniformLocation == NULL )
+    {
+        return false;
+    }
 
     glLinkProgram = ( PFNGLLINKPROGRAMPROC )wglGetProcAddress( "glLinkProgram" );
     if( glLinkProgram == NULL )
@@ -185,8 +194,21 @@ bool LoadGLExtensions( void )
         return false;
     }
 
+
+    glUniform3f = ( PFNGLUNIFORM3FPROC )wglGetProcAddress( "glUniform3f" );
+    if( glUniform3f == NULL )
+    {
+        return false;
+    }
+
     glUniformBlockBinding = ( PFNGLUNIFORMBLOCKBINDINGPROC )wglGetProcAddress( "glUniformBlockBinding" );
     if( glUniformBlockBinding == NULL )
+    {
+        return false;
+    }
+
+    glUniformMatrix4fv = ( PFNGLUNIFORMMATRIX4FVPROC )wglGetProcAddress( "glUniformMatrix4fv" );
+    if( glUniformMatrix4fv == NULL )
     {
         return false;
     }
@@ -220,6 +242,8 @@ bool LoadGLExtensions( void )
     {
         return false;
     }
+
+    return true;
 }
 
 bool LoadTempGLExtensions( void )
@@ -235,5 +259,7 @@ bool LoadTempGLExtensions( void )
     {
         return false;
     }
+
+    return true;
 }
 

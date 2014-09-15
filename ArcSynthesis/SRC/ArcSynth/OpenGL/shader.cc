@@ -5,7 +5,7 @@
 Shader::Shader( std::shared_ptr<Logger> log_ptr )
 {
     logger = log_ptr;
-    shaderProgramId = -1;
+    shaderProgramId = UINT32_MAX;
     isLinked = false;
 }
 
@@ -76,7 +76,7 @@ GLuint Shader::GetProgramId( void ) const
         return shaderProgramId;
     }
 
-    return -1;
+    return UINT32_MAX;
 }
 
 std::string Shader::GetShaderName( void ) const

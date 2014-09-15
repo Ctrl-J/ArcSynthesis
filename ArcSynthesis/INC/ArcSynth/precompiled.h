@@ -14,6 +14,7 @@
 
 // GLM for math functions! And the constants header (mainly for pi)
 #include <GLM\glm.hpp>
+#include <GLM\ext.hpp>
 #include <GLM\gtc\constants.hpp>
 #include <GLM\gtc\type_ptr.hpp>
 
@@ -23,6 +24,7 @@
 
 // Basic stream manipulation, memory (for c++11 smart pointers), and basic data structures.
 #include <array>
+#include <climits>
 #include <ctime>
 #include <chrono>
 #include <fstream>

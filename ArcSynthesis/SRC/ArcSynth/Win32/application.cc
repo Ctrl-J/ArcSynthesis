@@ -2,6 +2,9 @@
 #include <ArcSynth/Win32/application.h>
 #include <ArcSynth/Chapters/chapter_zero.h>
 #include <ArcSynth/Chapters/chapter_one.h>
+#include <ArcSynth/Chapters/chapter_two.h>
+#include <ArcSynth/Chapters/chapter_three.h>
+#include <ArcSynth/Chapters/chapter_four.h>
 
 LRESULT CALLBACK WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
@@ -35,11 +38,11 @@ Application::Application( const std::wstring &set_name )
 
     className = set_name + L"_class";
 
-    maxFrameTime = 0.0625;
+    maxFrameTime = 0.0625f;
 
-    lastTime = 0.0;
-    accumulatedTime = 0.0;
-    timeStep = 0.008;
+    lastTime = 0.0f;
+    accumulatedTime = 0.0f;
+    timeStep = 0.008f;
 
     initialized = false;
     done = false;
@@ -83,7 +86,7 @@ bool Application::Initialize( void )
     timer = std::make_shared<Timer>();
     timer->SetTime();
 
-    currentChapter = std::make_shared<ChapterOne>( "chapterOne.xml", config, keyboard, logger );
+    currentChapter = std::make_shared<ChapterFour>( "chapterFour.xml", config, keyboard, logger );
     currentChapter->Initialize();
 
     initialized = true;
@@ -128,7 +131,7 @@ bool Application::Run( void )
         // use an accumulator.
 
         // First, we get the time since the last render.
-        double frame_time = timer->GetDeltaTime();
+        float frame_time = timer->GetDeltaTime();
         if( maxFrameTime < frame_time )
         {
             frame_time = maxFrameTime;
@@ -154,12 +157,18 @@ bool Application::Run( void )
 
 void Application::step( void )
 {
-    currentChapter->Step( timeStep );
+    if( currentChapter->IsInitialized() == true )
+    {
+        currentChapter->Step( timeStep );
+    }
 }
 
 void Application::draw( void )
 {
-    currentChapter->Draw();
+    if( currentChapter->IsInitialized() == true )
+    {
+        currentChapter->Draw();
+    }
     renderer->Draw();
 }
 
@@ -320,8 +329,6 @@ bool Application::resizeWindow( unsigned int x, unsigned int y, unsigned int wid
     config->GraphicsConfig()->SetWindowDimensions( glm::ivec2( width, height ) );
     int windowWidth = config->GraphicsConfig()->GetWindowWidth();
     int windowHeight = config->GraphicsConfig()->GetWindowHeight();
-    int screenWidth = config->GraphicsConfig()->GetScreenWidth();
-    int screenHeight = config->GraphicsConfig()->GetScreenHeight();
 
     config->GraphicsConfig()->SetWindowPosition( glm::ivec2( x, y ) );
     int xPos = config->GraphicsConfig()->GetWindowXPosition();

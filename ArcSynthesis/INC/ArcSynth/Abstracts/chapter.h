@@ -15,11 +15,15 @@ public:
 
     virtual void Initialize( void ) = 0;
     virtual void Draw( void ) = 0;
-    virtual void Step( double time_step ) = 0;
+    virtual void Step( float time_step ) = 0;
     virtual void Shutdown( void ) = 0;
+    
+    bool IsInitialized( void ) const;
 
 protected:
     std::shared_ptr<Keyboard> keyboard;
     std::shared_ptr<Configuration> config;
     std::shared_ptr<Logger> logger;
+
+    bool initialized;
 };

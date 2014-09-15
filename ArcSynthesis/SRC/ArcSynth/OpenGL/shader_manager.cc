@@ -24,7 +24,7 @@ GLuint ShaderManager::GetShaderByName( const std::string &name ) const
     if( shader == shaderSet.end() )
     {
         logger->Log( LOG_TYPE::ERR, "Invalid Shader", "Shader " + name + " does not appear to be loaded." );
-        return -1;
+        return UINT32_MAX;
     }
 
     return shader->second.GetProgramId();

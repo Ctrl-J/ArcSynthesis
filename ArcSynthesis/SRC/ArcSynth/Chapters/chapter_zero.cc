@@ -21,7 +21,7 @@ void ChapterZero::Draw( void )
     glClearColor( color.r, color.g, color.b, 1.0 );
 }
 
-void ChapterZero::Step( double time_step )
+void ChapterZero::Step( float time_step )
 {
     color += speed * static_cast<float>( time_step );
     if( color.r >= 1.0 )

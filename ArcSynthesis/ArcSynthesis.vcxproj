@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="SRC\ArcSynth\Abstracts\chapter.cc" />
+    <ClCompile Include="SRC\ArcSynth\Chapters\chapter_four.cc" />
     <ClCompile Include="SRC\ArcSynth\Chapters\chapter_one.cc" />
     <ClCompile Include="SRC\ArcSynth\Chapters\chapter_three.cc" />
     <ClCompile Include="SRC\ArcSynth\Chapters\chapter_two.cc" />
@@ -185,6 +186,7 @@
     <ClCompile Include="SRC\ArcSynth\timer.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="INC\ArcSynth\Chapters\chapter_four.h" />
     <ClInclude Include="INC\ArcSynth\Chapters\chapter_three.h" />
     <ClInclude Include="INC\ArcSynth\Chapters\chapter_two.h" />
     <ClInclude Include="INC\ArcSynth\Win32\application.h" />
@@ -206,6 +208,7 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="BUILD\Debug\Config.xml" />
+    <Xml Include="DATA\chapterFour.xml" />
     <Xml Include="DATA\chapterOne.xml" />
     <Xml Include="DATA\chapterThree.xml" />
     <Xml Include="DATA\chapterTwo.xml" />

@@ -169,6 +169,8 @@ bool GLRenderer::initializeTemporaryExtensions( HWND h_wnd )
     ReleaseDC( h_wnd, deviceContext );
     deviceContext = NULL;
     logger->Log( LOG_TYPE::INFO, "Renderer Initialization", "Loaded temporary OpenGL extensions." );
+
+    return true;
 }
 
 void GLRenderer::SetClearColor( glm::vec3 targetColor )

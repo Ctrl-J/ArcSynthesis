@@ -16,7 +16,7 @@ public:
 
     void Initialize( void );
     void Draw( void );
-    void Step( double time_step );
+    void Step( float time_step );
     void Shutdown( void );
 
 private:

@@ -38,7 +38,7 @@ void ChapterTwo::Initialize( void )
 
     initArrays();
 
-    glClearColor( 0.2, 0.4, 0.45, 1.0 );
+    glClearColor( 0.2f, 0.4f, 0.45f, 1.0f );
 
 }
 
@@ -55,7 +55,7 @@ void ChapterTwo::Draw( void )
     glEnableVertexAttribArray( 1 );
     glVertexAttribPointer( 1, 4, GL_FLOAT, GL_FALSE, 0, 0 );
 
-    glDrawArrays( GL_TRIANGLES, 0, positionData.size());
+    glDrawArrays( GL_TRIANGLES, 0, static_cast< GLsizei >( positionData.size() ) );
 
     glDisableVertexAttribArray( 0 );
     glDisableVertexAttribArray( 1 );
@@ -64,7 +64,7 @@ void ChapterTwo::Draw( void )
     glFlush();
 }
 
-void ChapterTwo::Step( double time_step )
+void ChapterTwo::Step( float time_step )
 {
 
 }

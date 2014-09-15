@@ -40,7 +40,7 @@ std::vector<Shader> ChapterData::GetShaders( void )
 
 int ChapterData::GetShaderCount( void ) const
 {
-    return shaders.size();
+    return static_cast< int >( shaders.size() );
 }
 
 

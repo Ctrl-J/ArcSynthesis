@@ -8,14 +8,12 @@
                 layout (location = 0) in vec4 position;
                 layout (location = 1) in vec4 color;
                 
-                uniform vec3 colorShift;
-                
                 smooth out vec4 vertexColor;
                 
                 void main()
                 {
                     gl_Position = position;
-                    vertexColor = color * vec4( colorShift, 1.0f );
+                    vertexColor = color;
                 }
             </vertexcode>
             <fragmentcode>

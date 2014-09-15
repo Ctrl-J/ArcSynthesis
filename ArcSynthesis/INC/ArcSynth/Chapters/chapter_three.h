@@ -16,7 +16,7 @@ public:
 
     void Initialize( void );
     void Draw( void );
-    void Step( double time_step );
+    void Step( float time_step );
     void Shutdown( void );
 
 private:
@@ -32,6 +32,11 @@ private:
     std::vector<glm::vec4> positionData;
     std::vector<glm::vec4> colorData;
     std::vector<float> colorSpeed;
+
+    glm::vec3 colorShiftDirection;
+    glm::vec3 colorShiftUniform;
+
+    GLuint colorShiftUniformObject;
 
     GLuint position_buffer_object;
     GLuint color_buffer_object;

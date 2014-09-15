@@ -70,10 +70,10 @@ private:
 
     // Timer with accumulator and constant-step
     std::shared_ptr<Timer> timer;
-    double maxFrameTime;
-    double lastTime;
-    double accumulatedTime;
-    double timeStep;
+    float maxFrameTime;
+    float lastTime;
+    float accumulatedTime;
+    float timeStep;
 
     std::shared_ptr<Configuration> config;
 

@@ -23,6 +23,7 @@
 
 // Basic stream manipulation, memory (for c++11 smart pointers), and basic data structures.
 #include <array>
+#include <climits>
 #include <ctime>
 #include <chrono>
 #include <fstream>

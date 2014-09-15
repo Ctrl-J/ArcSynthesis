@@ -28,6 +28,14 @@ void ChapterThree::Initialize( void )
         }
     }
 
+    GLuint shaderId = shaderManager->GetShaderByName( "basic" );
+    if( shaderId == UINT32_MAX )
+    {
+        initialized = false;
+        return;
+    }
+    colorShiftUniformObject = glGetUniformLocation( shaderId, "colorShift" );
+
     positionData.push_back( glm::vec4( -0.75f, -0.75f,  0.0f,  1.0f ) );
     positionData.push_back( glm::vec4(  0.75f,  -0.75f, 0.0f,  1.0f ) );
     positionData.push_back( glm::vec4(  0.0f,   0.75f,  0.0f,  1.0f ) );
@@ -43,8 +51,12 @@ void ChapterThree::Initialize( void )
     colorSpeed.push_back( 0.15f );
     colorSpeed.push_back( 0.05f );
 
-    glClearColor( 0.2, 0.4, 0.45, 1.0 );
+    colorShiftUniform = glm::vec3( 0.2f, 0.4f, 0.6f );
+    colorShiftDirection = glm::vec3( 0.1f, -0.1f, 0.02f );
 
+    glClearColor( 0.2f, 0.4f, 0.45f, 1.0f );
+
+    initialized = true;
 }
 
 void ChapterThree::Draw( void )
@@ -60,7 +72,7 @@ void ChapterThree::Draw( void )
     glEnableVertexAttribArray( 1 );
     glVertexAttribPointer( 1, 4, GL_FLOAT, GL_FALSE, 0, 0 );
 
-    glDrawArrays( GL_TRIANGLES, 0, positionData.size());
+    glDrawArrays( GL_TRIANGLES, 0, static_cast<GLsizei>(positionData.size()));
 
     glDisableVertexAttribArray( 0 );
     glDisableVertexAttribArray( 1 );
@@ -69,7 +81,7 @@ void ChapterThree::Draw( void )
     glFlush();
 }
 
-void ChapterThree::Step( double time_step )
+void ChapterThree::Step( float time_step )
 {
     positionData[0].x += time_step * positionSpeed[0];
     positionData[0].y += time_step * positionSpeed[0];
@@ -165,6 +177,25 @@ void ChapterThree::Step( double time_step )
             colorSpeed[colorIndex] = ( -colorSpeed[colorIndex] );
         }
     }
+
+    for( int componentIndex = 0; componentIndex < 3; componentIndex++ )
+    {
+        colorShiftUniform[componentIndex] += static_cast< float >( time_step )* colorShiftDirection[componentIndex];
+
+        if( colorShiftUniform[componentIndex] >= 1.0f )
+        {
+            colorShiftUniform[componentIndex] = 1.0f;
+            colorShiftDirection[componentIndex] = ( -colorShiftDirection[componentIndex] );
+        }
+        else if( colorShiftUniform[componentIndex] <= 0.0f )
+        {
+            colorShiftUniform[componentIndex] = 0.0f;
+            colorShiftDirection[componentIndex] = ( -colorShiftDirection[componentIndex] );
+        }
+    }
+
+    glUseProgram( shaderManager->GetShaderByName( "basic" ) );
+    glUniform3f( colorShiftUniformObject, colorShiftUniform.r, colorShiftUniform.g, colorShiftUniform.b );
     
     glBindBuffer( GL_ARRAY_BUFFER, position_buffer_object );
     glBufferData( GL_ARRAY_BUFFER, sizeof( glm::vec4 ) * positionData.size(), &positionData[0], GL_STREAM_DRAW );

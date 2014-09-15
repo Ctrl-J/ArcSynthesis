@@ -29,6 +29,7 @@ PFNGLLINKPROGRAMPROC                glLinkProgram = NULL;
 PFNGLSHADERSOURCEPROC               glShaderSource = NULL;
 PFNGLUNIFORM3FPROC                  glUniform3f = NULL;
 PFNGLUNIFORMBLOCKBINDINGPROC        glUniformBlockBinding = NULL;
+PFNGLUNIFORMMATRIX4FVPROC           glUniformMatrix4fv = NULL;
 PFNGLUSEPROGRAMPROC                 glUseProgram = NULL;
 PFNGLVERTEXATTRIBPOINTERPROC        glVertexAttribPointer = NULL;
 PFNWGLCHOOSEPIXELFORMATARBPROC      wglChoosePixelFormatARB = NULL;
@@ -202,6 +203,12 @@ bool LoadGLExtensions( void )
 
     glUniformBlockBinding = ( PFNGLUNIFORMBLOCKBINDINGPROC )wglGetProcAddress( "glUniformBlockBinding" );
     if( glUniformBlockBinding == NULL )
+    {
+        return false;
+    }
+
+    glUniformMatrix4fv = ( PFNGLUNIFORMMATRIX4FVPROC )wglGetProcAddress( "glUniformMatrix4fv" );
+    if( glUniformMatrix4fv == NULL )
     {
         return false;
     }

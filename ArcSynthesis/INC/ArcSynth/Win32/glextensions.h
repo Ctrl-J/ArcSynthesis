@@ -28,6 +28,7 @@ extern PFNGLGETUNIFORMLOCATIONPROC          glGetUniformLocation;
 extern PFNGLLINKPROGRAMPROC                 glLinkProgram;
 extern PFNGLSHADERSOURCEPROC                glShaderSource;
 extern PFNGLUNIFORM3FPROC                   glUniform3f;
+extern PFNGLUNIFORMMATRIX4FVPROC            glUniformMatrix4fv;
 extern PFNGLUNIFORMBLOCKBINDINGPROC         glUniformBlockBinding;
 extern PFNGLUSEPROGRAMPROC                  glUseProgram;
 extern PFNGLVERTEXATTRIBPOINTERPROC         glVertexAttribPointer;

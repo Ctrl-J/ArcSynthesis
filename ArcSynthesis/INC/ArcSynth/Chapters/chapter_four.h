@@ -30,6 +30,21 @@ private:
 
     std::vector<glm::vec4> vertexData;
 
-    GLuint vertex_buffer_object;
-    GLuint vertex_array_object;
+    glm::mat4 modelMatrix;
+    glm::mat4 viewMatrix;
+    glm::mat4 projectionMatrix;
+
+    glm::vec3 cameraPosition;
+    glm::vec3 cameraVelocity;
+    float cameraDrag;
+    float cameraAcceleration;
+
+    GLuint shaderId;
+
+    GLuint vertexBufferObject;
+    GLuint vertexArrayObject;
+
+    GLuint modelMatrixUniformObject;
+    GLuint viewMatrixUniformObject;
+    GLuint projectionMatrixUniformObject;
 };

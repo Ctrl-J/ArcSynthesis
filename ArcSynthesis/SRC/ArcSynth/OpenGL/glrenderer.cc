@@ -84,15 +84,15 @@ bool GLRenderer::Initialize( HWND h_wnd )
         return false;
     }
 
-    // For now we don't want any culling or depth testing
-    // Just get the triangles on the screen
-    glClearDepth( 1.0 );
-    glDisable( GL_DEPTH_TEST );
-    glDisable( GL_CULL_FACE );
-    glCullFace( GL_BACK );
+    glEnable( GL_DEPTH_TEST );
+    glDepthMask( GL_TRUE );
+    glDepthFunc( GL_LEQUAL );
+    glDepthRange( 0.0f, 1.0f );
 
     // Clockwise triangles face forward
     glFrontFace( GL_CW );
+    glEnable( GL_CULL_FACE );
+    glCullFace( GL_BACK );
 
     auto get_vendor = const_cast< GLubyte * >( glGetString( GL_VENDOR ) );
     vendor_name = std::string( reinterpret_cast< char * >( get_vendor ) );

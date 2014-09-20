@@ -8,6 +8,7 @@ ChapterFour::ChapterFour( const std::string &data_filename, std::shared_ptr<Conf
                         std::shared_ptr<Keyboard> keyboard_ptr, std::shared_ptr<Logger> logger_ptr ) 
     : Chapter( config_ptr, keyboard_ptr, logger_ptr )
 {
+    camera = std::make_shared<FreeCamera>( logger_ptr );
     filename = data_filename;
 }
 
@@ -37,7 +38,8 @@ void ChapterFour::Initialize( void )
         return;
     }
 
-    cameraPosition = glm::vec3( 0.0f, 0.0f, -5.0f );
+    camera->Initialize();
+
     cameraAcceleration = 1.25f;
     cameraDrag = 0.75f;
 
@@ -46,10 +48,12 @@ void ChapterFour::Initialize( void )
     projectionMatrixUniformObject = glGetUniformLocation( shaderId, "projection" );
 
     modelMatrix = glm::mat4();
-    viewMatrix = glm::mat4();
-    viewMatrix = glm::translate( viewMatrix, cameraPosition );
-    float aspect_ratio = static_cast< float >( config->GraphicsConfig()->GetCurrentAspectRatio() );
-    projectionMatrix = glm::perspective( 45.0f, aspect_ratio, 0.01f, 100.0f );
+    viewMatrix = camera->GetWorldMatrix();
+
+    aspectRatio = static_cast< float >( config->GraphicsConfig()->GetCurrentAspectRatio() );
+    setClipPlanes( 0.01f, 100.0f );
+    setFOV( 45.0f );
+    projectionMatrix = getProjectionMatrix();
 
     glUseProgram( shaderId );
     glUniformMatrix4fv( modelMatrixUniformObject, 1, GL_FALSE, glm::value_ptr( modelMatrix ) );
@@ -179,22 +183,18 @@ void ChapterFour::Step( float time_step )
     {
         cameraVelocity.z += cameraAcceleration * time_step;
     }
-
     if( keyboard->IsKeydown( 'S' ) )
     {
         cameraVelocity.z -= cameraAcceleration * time_step;
     }
-
     if( keyboard->IsKeydown( 'D' ) )
     {
         cameraVelocity.x -= cameraAcceleration * time_step;
     }
-
     if( keyboard->IsKeydown( 'A' ) )
     {
         cameraVelocity.x += cameraAcceleration * time_step;
     }
-
     if( keyboard->IsKeydown( 'E' ) )
     {
         cameraVelocity.y += cameraAcceleration * time_step;
@@ -202,6 +202,32 @@ void ChapterFour::Step( float time_step )
     if( keyboard->IsKeydown( 'Q' ) )
     {
         cameraVelocity.y -= cameraAcceleration * time_step;
+    }
+
+    glm::vec3 rotationAngles;
+    if( keyboard->IsKeydown( 'J' ) )
+    {
+        rotationAngles.x += cameraAcceleration * time_step;
+    }
+    if( keyboard->IsKeydown( 'L' ) )
+    {
+        rotationAngles.x -= cameraAcceleration * time_step;
+    }
+    if( keyboard->IsKeydown( 'I' ) )
+    {
+        rotationAngles.y += cameraAcceleration * time_step;
+    }
+    if( keyboard->IsKeydown( 'K' ) )
+    {
+        rotationAngles.y -= cameraAcceleration * time_step;
+    }
+    if( keyboard->IsKeydown( 'O' ) )
+    {
+        rotationAngles.z += cameraAcceleration * time_step;
+    }
+    if( keyboard->IsKeydown( 'U' ) )
+    {
+        rotationAngles.z -= cameraAcceleration * time_step;
     }
 
     cameraVelocity += ( -cameraVelocity ) * cameraDrag * time_step;
@@ -221,9 +247,11 @@ void ChapterFour::Step( float time_step )
         }
     }
 
-    cameraPosition += cameraVelocity * time_step;
+    glm::vec3 newPosition = camera->GetPosition() + cameraVelocity * time_step;
 
-    viewMatrix = glm::translate( glm::mat4(), cameraPosition );
+    camera->SetPosition( newPosition );
+    camera->SetRotation( rotationAngles );
+    viewMatrix = camera->GetWorldMatrix();
 
     glUseProgram( shaderId );
     glUniformMatrix4fv( viewMatrixUniformObject, 1, GL_FALSE, glm::value_ptr( viewMatrix ) );
@@ -243,4 +271,30 @@ void ChapterFour::initArrays( void )
     glBufferData( GL_ARRAY_BUFFER, sizeof( glm::vec4 ) * vertexData.size(), &vertexData[0], GL_STATIC_DRAW );
     glBindBuffer( GL_ARRAY_BUFFER, 0 );
 
+}
+
+
+void ChapterFour::setClipPlanes( float near_plane, float far_plane )
+{
+    nearClipPlane = near_plane;
+    farClipPlane = far_plane;
+}
+
+void ChapterFour::setFOV( float new_fov )
+{
+    fov = new_fov;
+}
+
+glm::mat4 ChapterFour::getProjectionMatrix( void )
+{
+    glm::mat4 output;
+
+    output = glm::perspective( fov, aspectRatio, nearClipPlane, farClipPlane );
+
+    return output;
+}
+
+glm::mat4 ChapterFour::getViewMatrix( void )
+{
+    return viewMatrix;
 }

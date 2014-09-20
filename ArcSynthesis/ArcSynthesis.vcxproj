@@ -168,6 +168,8 @@
     <ClCompile Include="SRC\ArcSynth\Config\chapter_data.cc" />
     <ClCompile Include="SRC\ArcSynth\Config\config.cc" />
     <ClCompile Include="SRC\ArcSynth\Config\graphics_configuration.cc" />
+    <ClCompile Include="SRC\ArcSynth\Abstracts\model.cc" />
+    <ClCompile Include="SRC\ArcSynth\Objects\free_camera.cc" />
     <ClCompile Include="SRC\ArcSynth\OpenGL\glrenderer.cc" />
     <ClCompile Include="SRC\ArcSynth\OpenGL\shader.cc" />
     <ClCompile Include="SRC\ArcSynth\Config\system_configuration.cc" />
@@ -189,6 +191,7 @@
     <ClInclude Include="INC\ArcSynth\Chapters\chapter_four.h" />
     <ClInclude Include="INC\ArcSynth\Chapters\chapter_three.h" />
     <ClInclude Include="INC\ArcSynth\Chapters\chapter_two.h" />
+    <ClInclude Include="INC\ArcSynth\Objects\free_camera.h" />
     <ClInclude Include="INC\ArcSynth\Win32\application.h" />
     <ClInclude Include="INC\ArcSynth\Abstracts\chapter.h" />
     <ClInclude Include="INC\ArcSynth\Config\chapter_data.h" />
@@ -205,6 +208,7 @@
     <ClInclude Include="INC\ArcSynth\OpenGL\shader_manager.h" />
     <ClInclude Include="INC\ArcSynth\Config\system_configuration.h" />
     <ClInclude Include="INC\ArcSynth\timer.h" />
+    <ClInclude Include="INC\ArcSynth\Abstracts\model.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="BUILD\Debug\Config.xml" />

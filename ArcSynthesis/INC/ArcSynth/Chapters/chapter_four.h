@@ -1,7 +1,8 @@
 #pragma once
-#include <ArcSynth/precompiled.h>
-#include <ArcSynth/Abstracts/chapter.h>
-#include <ArcSynth/OpenGL/shader_manager.h>
+#include <ArcSynth\precompiled.h>
+#include <ArcSynth\Abstracts\chapter.h>
+#include <ArcSynth\OpenGL\shader_manager.h>
+#include <ArcSynth\Objects\free_camera.h>
 
 class ChapterData;
 
@@ -34,10 +35,22 @@ private:
     glm::mat4 viewMatrix;
     glm::mat4 projectionMatrix;
 
-    glm::vec3 cameraPosition;
+    std::shared_ptr<FreeCamera> camera;
     glm::vec3 cameraVelocity;
+
     float cameraDrag;
     float cameraAcceleration;
+
+    float fov;
+    float aspectRatio;
+    float nearClipPlane;
+    float farClipPlane;
+
+    void setFOV( float new_fov );
+    void setClipPlanes( float near_plane, float far_plane );
+
+    glm::mat4 getViewMatrix( void );
+    glm::mat4 getProjectionMatrix( void );
 
     GLuint shaderId;
 

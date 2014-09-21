@@ -86,8 +86,10 @@ bool Application::Initialize( void )
     timer = std::make_shared<Timer>();
     timer->SetTime();
 
-    currentChapter = std::make_shared<ChapterFour>( "chapterFour.xml", config, keyboard, logger );
+    currentChapter = std::make_shared<ChapterFour>( "chapterFour.xml", config, keyboard, mouse, logger );
     currentChapter->Initialize();
+
+    lastMousePosition = glm::vec2( 0.0f, 0.0f );
 
     initialized = true;
 
@@ -101,7 +103,7 @@ bool Application::Run( void )
 
     while( done == false )
     {
-        if( PeekMessage( &message, NULL, 0, 0, PM_REMOVE ) )
+        while( PeekMessage( &message, NULL, 0, 0, PM_REMOVE ) )
         {
             TranslateMessage( &message );
             DispatchMessage( &message );
@@ -121,7 +123,7 @@ bool Application::Run( void )
             break;
         }
 
-        if( keyboard->IsKeyPressed( VK_NEXT ) )
+        if( keyboard->IsKeyPressed( VK_F8 ) )
         {
             toggleFullscreen();
             continue;
@@ -301,6 +303,27 @@ bool Application::initializeWindow( void )
     SetFocus( hWnd );
     SetForegroundWindow( hWnd );
 
+    mouse = std::make_shared<Mouse>( logger );
+
+    inputDevices[0].usUsagePage = 0x01;
+    inputDevices[0].usUsage = 0x02;
+    inputDevices[0].dwFlags = RIDEV_NOLEGACY;
+    inputDevices[0].hwndTarget = hWnd;
+    
+    inputDevices[1].usUsagePage = 0x01;
+    inputDevices[1].usUsage = 0x06;
+    inputDevices[1].dwFlags = RIDEV_NOLEGACY;
+    inputDevices[1].hwndTarget = hWnd;
+    
+    if( RegisterRawInputDevices( inputDevices, 2, sizeof( inputDevices[0] ) ) == FALSE ) 
+    {
+        DWORD error = GetLastError();
+        std::stringstream message;
+        message << "Input error with DWORD = " << error;
+        logger->Log( LOG_TYPE::ERR, "Error registering input devices", message.str() );
+        return false;
+    }
+
     windowActivated = true;
     windowInitialized = true;
 
@@ -405,31 +428,62 @@ LRESULT CALLBACK Application::WindowProc( HWND handle, UINT message, WPARAM w_pa
     case WM_CLOSE:
         PostQuitMessage( 0 );
         return 0;
-    case WM_KEYDOWN:
-        key_code = static_cast< unsigned int >( w_param );
-        if( ( key_code >= 0 ) && ( key_code < 256 ) )
+    case WM_INPUT:
+    {
+        UINT size;
+        GetRawInputData( ( HRAWINPUT )l_param, RID_INPUT, NULL, &size, sizeof( RAWINPUTHEADER ) );
+        LPBYTE inputData = new BYTE[size];
+        if( inputData == NULL )
         {
-            // On the first keydown
-            if( ( l_param & ( 1 << 30 ) ) == 0 )
+            return 0;
+        }
+
+        if( GetRawInputData( ( HRAWINPUT )l_param, RID_INPUT, inputData, &size, sizeof( RAWINPUTHEADER ) ) != size )
+        {
+            logger->Log( LOG_TYPE::WARNING, "Error with raw input.", "Raw input reported incorrect size." );
+        }
+
+        RAWINPUT *rawData = ( RAWINPUT * )inputData;
+
+        if( rawData->header.dwType == RIM_TYPEMOUSE )
+        {
+            float deltaX = rawData->data.mouse.lLastX - lastMousePosition.x;
+            float deltaY = rawData->data.mouse.lLastY - lastMousePosition.y;
+            lastMousePosition.x = (rawData->data.mouse.lLastX, rawData->data.mouse.lLastY);
+
+            SetCursorPos( config->GraphicsConfig()->GetScreenWidth() / 2, config->GraphicsConfig()->GetScreenHeight() / 2 );
+            mouse->setMouseDelta( deltaX, deltaY );
+        }
+        
+        if( rawData->header.dwType == RIM_TYPEKEYBOARD )
+        {
+            key_code = static_cast< unsigned int >( rawData->data.keyboard.VKey );
+            if( rawData->data.keyboard.Flags == RI_KEY_MAKE )
             {
-                keyboard->setKeyPressed( key_code, true);
+                if( ( key_code >= 0 ) && ( key_code < 256 ) )
+                {
+                    keyboard->setKeyPressed( key_code, true );
+
+                    if( keyboard->IsKeydown( key_code ) )
+                    {
+                        keyboard->setKeyPressed( key_code, false );
+                    }
+
+                    keyboard->setKeyDown( key_code );
+                }
             }
             
-            if( keyboard->IsKeydown(key_code) )
+            if( rawData->data.keyboard.Flags == RI_KEY_BREAK )
             {
-                keyboard->setKeyPressed(key_code, false);
+                if( ( key_code >= 0 ) && ( key_code < 256 ) )
+                {
+                    keyboard->setKeyUp( key_code );
+                }
             }
+        }
 
-            keyboard->setKeyDown( key_code );
-        }
-        break;
-    case WM_KEYUP:
-        key_code = static_cast< unsigned int >( w_param );
-        if( ( key_code >= 0 ) && ( key_code < 256 ) )
-        {
-            keyboard->setKeyUp( key_code );
-        }
-        break;
+        delete[] inputData;
+    } break;
     case WM_ACTIVATE:
         if( true == windowInitialized )
         {
@@ -438,11 +492,13 @@ LRESULT CALLBACK Application::WindowProc( HWND handle, UINT message, WPARAM w_pa
             if( true == windowActivated )
             {
                 windowActivated = false;
+                //ShowCursor( TRUE );
                 SetWindowPos( hWnd, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE );
             }
             else
             {
                 windowActivated = true;
+                //ShowCursor( FALSE );
                 SetWindowPos( hWnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE );
             }
         }

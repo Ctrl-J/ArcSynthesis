@@ -9,10 +9,12 @@ FreeCamera::~FreeCamera()
 {
 }
 
-void FreeCamera::Initialize( void )
+bool FreeCamera::Initialize( void )
 {
-    position = glm::vec3( 0.0f, 0.0f, -5.0f );
+    position = glm::vec3( 0.0f, 0.0f, -50.0f );
     initialized = true;
+    
+    return true;
 }
 
 void FreeCamera::Shutdown( void )

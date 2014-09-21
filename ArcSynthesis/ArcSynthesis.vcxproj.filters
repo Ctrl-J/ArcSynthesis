@@ -81,6 +81,15 @@
     <ClCompile Include="SRC\ArcSynth\Abstracts\model.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\Mouse.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\Objects\demo_cube.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\ArcSynth\Abstracts\render_model.cc">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="INC\ArcSynth\keyboard.h">
@@ -144,6 +153,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="INC\ArcSynth\Objects\free_camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="INC\ArcSynth\mouse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="INC\ArcSynth\Abstracts\render_model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="INC\ArcSynth\Objects\demo_cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

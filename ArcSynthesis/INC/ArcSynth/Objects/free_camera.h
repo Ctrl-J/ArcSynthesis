@@ -8,7 +8,7 @@ public:
     FreeCamera( std::shared_ptr<Logger> logger);
     ~FreeCamera();
 
-    void Initialize( void );
+    bool Initialize( void );
     void Shutdown( void );
 
 private:

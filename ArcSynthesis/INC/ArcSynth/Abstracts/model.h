@@ -16,11 +16,12 @@ public:
     Model( const Model &other ) = delete;
     Model &operator= ( const Model &other ) = delete;
 
-    virtual void Initialize( void ) = 0;
+    virtual bool Initialize( void ) = 0;
     virtual void Shutdown( void ) = 0;
 
     virtual void SetPosition( glm::vec3 new_position );
-    virtual void SetRotation( glm::vec3 new_rotation );
+    virtual void SetOrientation( glm::fquat new_orientation );
+    virtual void ApplyRotation( glm::vec3 new_rotation );
 
     virtual glm::vec3 GetPosition( void ) const;
     virtual glm::quat GetOrientation( void ) const;

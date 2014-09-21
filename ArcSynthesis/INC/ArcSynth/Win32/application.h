@@ -5,6 +5,7 @@
 #include <ArcSynth/Config/config.h>
 #include <ArcSynth/OpenGL/glrenderer.h>
 #include <ArcSynth/keyboard.h>
+#include <ArcSynth/mouse.h>
 #include <ArcSynth/timer.h>
 #include <ArcSynth/logger.h>
 
@@ -80,6 +81,10 @@ private:
     std::shared_ptr<Logger> logger;
 
     std::shared_ptr<Chapter> currentChapter;
+
+    RAWINPUTDEVICE inputDevices[2];
+    std::shared_ptr<Mouse> mouse;
+    glm::vec2 lastMousePosition;
 
     bool initialized;
     bool done;

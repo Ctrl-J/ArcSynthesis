@@ -13,10 +13,12 @@
 #include <GLEXT\wglext.h>
 
 // GLM for math functions! And the constants header (mainly for pi)
+#define GLM_FORCE_RADIANS
 #include <GLM\glm.hpp>
 #include <GLM\ext.hpp>
 #include <GLM\gtc\constants.hpp>
 #include <GLM\gtc\type_ptr.hpp>
+#include <GLM\gtc\quaternion.hpp>
 
 // RapidXML for loading of config files and shaders
 #include <RapidXML\rapidxml.hpp>
